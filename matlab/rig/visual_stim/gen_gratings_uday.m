@@ -1,8 +1,29 @@
 % function [tex,trigonframe] = gen_gratings(wininfo,gratingInfo,thisstim)
 function thisstim = gen_gratings_uday(wininfo,gratingInfo,thisstim,aperture)
+%gen_gratings_uday  Generate drifting grating textures for a single trial.
+%
+% thisstim = gen_gratings_uday(wininfo, gratingInfo, thisstim, aperture)
+%
+% Purpose
+% - Precomputes a set of Psychtoolbox textures (`thisstim.tex`) for one
+%   stimulus condition (orientation/size/spatial freq/temporal freq/contrast).
+% - The calling runner (`run_gratings_*`) then flips through these textures
+%   according to `thisstim.movieFrameIndices`.
+%
+% Inputs
+% - wininfo: struct from `gen_wininfo_uday` (window handle, PixperDeg, etc.)
+% - gratingInfo: struct containing global rendering parameters (background,
+%   gaussian width factor `gf`, waveform type, etc.)
+% - thisstim: struct containing per-trial parameters (thisdeg, thissize, etc.)
+% - aperture (optional): reserved; currently unused.
+%
+% Output
+% - thisstim: same struct with added `tex`, `movieFrameIndices`, etc.
+
 if nargin < 4
     aperture = [];
 end
+% `aperture` is currently unused; kept for backwards compatibility.
 gf = gratingInfo.gf;%.Gaussian width factor 5: reveal all .5 normal fall off
 Bcol = gratingInfo.Bcol; % Background 0 black, 255 white
 method = gratingInfo.method;
@@ -19,6 +40,7 @@ yposStim = wininfo.yposStim;
 frameRate = wininfo.frameRate;
 bg = Bcol*ones(yRes,xRes);
 
+%% Resolve trial parameters and placement in screen coordinates
 thisdeg = thisstim.thisdeg;
 thiswidth = thisstim.thiswidth;
 thissize = thisstim.thissize;
@@ -38,6 +60,7 @@ else
     y0 = floor(yRes/2 - yposStim*PixperDeg - thissize.*PixperDeg/2);
 end
 
+%% Precompute texture frames for one temporal cycle
 [x,y] = meshgrid([-thiswidth:thiswidth],[-thiswidth:thiswidth]);
 if(thisspeed == 0)
     numFrames = ceil(frameRate/3);
@@ -85,6 +108,8 @@ for i=1:numFrames
 %     toc
     thisstim.tex(i) = Screen('MakeTexture', w, T);
 end
+
+%% Describe how to index frames during playback
 thisstim.trigonframe = false(numFrames,1);
 thisstim.movieFrameIndices = mod(0:(thisstim.movieDurationFrames-1), numFrames) + 1;
 end

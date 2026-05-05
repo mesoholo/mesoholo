@@ -1,19 +1,38 @@
 function moviedata=generateNoise_xyt_uday(maxSpatFreq,maxTempFreq,duration,wininfo,result,movtype,binarize)
-%%% generates white noise movies with limited spatial and temporal
-%%% frequency, via inverse fourier transform
-%%% now with more options ...
-%%% binarize (0/1)  = convert grayscale to binary, for higher contrast
-%%% movie type = allows noise patches, moving noise bars, etc.
-%%% movietype 1 = standard contrast modulated noise
-%%% movietype 1.5 = random contrast modulated noise
-%%% movietype 2 = full-field step function of white noise
-%%% movietype 3 = moving bar of white noise
-%%% movietype 4 = alternating patches of white noise along x-axis
-%%% movietype 5 = alternating patches of white noise along y-axis
+%generateNoise_xyt_uday  Generate band-limited spatiotemporal noise movies.
+%
+% moviedata = generateNoise_xyt_uday(maxSpatFreq, maxTempFreq, duration, wininfo, result, movtype, binarize)
+%
+% Purpose
+% - Builds a spatiotemporally band-limited noise movie by sampling a random
+%   frequency spectrum and applying an inverse FFT (3D: x,y,time).
+% - Optionally post-processes the movie into different stimulus “motifs”
+%   (contrast modulation, moving bar masks, patch masks).
+%
+% Inputs
+% - maxSpatFreq: spatial cutoff (cycles/deg)
+% - maxTempFreq: temporal cutoff (Hz)
+% - duration: stimulus duration (seconds)
+% - wininfo: struct from `gen_wininfo_uday` (xRes/yRes/frameRate/PixperDeg)
+% - result: struct from stimulus runner; used for contrast and timing params
+% - movtype: selects the post-processing motif (see mapping below)
+% - binarize: if true, quantize grayscale to {0,1} for higher contrast edges
+%
+% Output
+% - moviedata: uint8 movie frames ready to upload to Psychtoolbox textures.
+%
+% Movie motif mapping (historical):
+% - 1   (cmod): contrast-modulated noise (sinusoidal envelope)
+% - 1.5 (cmodrnd): random step-wise contrast modulation
+% - 2   (step): full-field step function
+% - 3   (bar): moving bar mask
+% - 3.5 (oscbar): oscillating bar mask
+% - 4   (Xpatches): alternating patches along x
+% - 5   (Ypatches): alternating patches along y
 
 rand('state',sum(100*clock))
 
-%%% stimulus/display parameters
+%% Defaults and stimulus/display parameters
 
 if ~exist('binarize','var') |  isempty(binarize)
     binarize=0;
@@ -36,7 +55,7 @@ if(contrastSigma == 0)
     contrastSigma = 0.001;
 end
 %disp(['contrast used: ', num2str(result.contrast)])
-%% derived parameters
+%% Derived parameters (FFT grid and cutoffs)
 
 degperpix = (1/wininfo.PixperDeg)*imageMag;
 nframes = round(framerate*duration,-1);
@@ -57,7 +76,7 @@ maxFreq_pix = maxSpatFreq*degperpix;
 spatCutoff = round(maxFreq_pix / freqInt_pix);
 
 
-%%% generate frequency spectrum (invFFT)
+%% Generate random frequency spectrum (3D) inside cutoffs
 alpha=-1;
 offset=3;
 range_mult =1;
@@ -81,8 +100,7 @@ sig = ones(size(spaceRange,2), size(spaceRange,2), size(tempRange,2));
 invFFT(spaceRange, spaceRange, tempRange) = single(use .* normrnd(mu,sig).*exp(2*pi*i*rand(size(spaceRange,2), size(spaceRange,2), size(tempRange,2))));
 clear use;
 
-%% in order to get real values for image, need to make spectrum
-%% symmetric
+%% Enforce Hermitian symmetry so inverse FFT is real-valued
 fullspace = -range_mult*spatCutoff:range_mult*spatCutoff; halftemp = 1:range_mult*tempCutoff;
 halfspace = 1:range_mult*spatCutoff;
 invFFT(imsize/2 + fullspace+1, imsize/2+fullspace+1, nframes/2 + halftemp+1) = ...

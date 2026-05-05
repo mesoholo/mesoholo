@@ -1,8 +1,24 @@
 function wininfo = gen_wininfo_uday(result)
-% xRes = 1024; 
-% yRes = 768;
-% xRes = 1280; % Dell 170S monitors
-% yRes = 1024;
+%gen_wininfo_uday  Initialize Psychtoolbox window and geometry conversions.
+%
+% wininfo = gen_wininfo_uday(result)
+%
+% Purpose
+% - Opens a Psychtoolbox window and computes pixel↔degree conversions given
+%   the monitor size and viewing distance.
+% - Packages window handles, geometry, and a background texture into `wininfo`
+%   for downstream stimulus code (`gen_gratings_uday`, `generateNoise_xyt_uday`).
+%
+% Inputs
+% - result: struct created by the stimulus runner (e.g. `run_gratings_*`).
+%   Expected fields include `DScreen` (cm), `VertScreenSize` (cm),
+%   `HorzScreenSize` (cm), and optionally background parameters.
+%
+% Output
+% - wininfo: struct containing Psychtoolbox window (`w`), rects, frame rate,
+%   pixel-per-degree scale factors, and a pre-made background texture (`BG`).
+
+%% Select background color / luminance
 Bcol = 128;
 screenNumber = max(Screen('Screens'));
 % screenNumber = 1;
@@ -31,7 +47,7 @@ if isfield(result, 'backgroundcontrast')
     Bcol = blI + (whI-blI)*result.backgroundcontrast;
 end
 
-% FOR GAMMA CORRECTION
+%% Optional: gamma correction lookup (rig-specific)
 try
 if result.GammaCorrect
     scaledluxvals = load('C:\Users\scanimage\Documents\MATLAB\FrankenRigVisCode\GitHub\FrankenVisCode\Conor\scaledluxvalues20260325.mat');
@@ -40,6 +56,7 @@ end
 catch
 end
 
+%% Open Psychtoolbox window (panel fitter for consistent framebuffer scaling)
 scaleby = 0.5;
 xRes = RectWidth(Screen('Rect', screenNumber))*scaleby;
 yRes = RectHeight(Screen('Rect', screenNumber))*scaleby;
@@ -66,6 +83,7 @@ Screen('Preference','SkipSyncTests', wininfo.skipSync);
 [w,windowRect] = PsychImaging('OpenWindow',screenNumber,Bcol); %Screen('OpenWindow',screenNumber);
 % HideCursor()
 
+%% Monitor geometry and pixels-per-degree conversion
 [sw,sh] = Screen('DisplaySize',screenNumber);
 sw = result.HorzScreenSize*10;
 sh = result.VertScreenSize*10;
@@ -94,7 +112,7 @@ catch
 end
 frameRate = Screen('FrameRate',screenNumber);
 
-
+%% Package outputs
 wininfo.xRes = xRes;
 wininfo.yRes = yRes;
 wininfo.w = w;
