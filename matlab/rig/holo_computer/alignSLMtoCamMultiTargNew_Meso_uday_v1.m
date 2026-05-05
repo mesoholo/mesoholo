@@ -1,4 +1,30 @@
 function alignSLMtoCamMultiTargNew_Meso_uday_v1
+%alignSLMtoCamMultiTargNew_Meso_uday_v1  Full 3D calibration: ScanImage ↔ SLM ↔ Camera.
+%
+% Purpose
+% - This is the main “calibration day” script used on the hologram computer.
+% - It collects correspondences between:
+%   - ScanImage / optotune coordinates (where targets should be in the imaging FOV)
+%   - SLM coordinates (where the hologram is addressed)
+%   - camera coordinates (Basler/ThorCam images of spots / burn patterns)
+% - It then fits a calibration model (`CoC`) used by `function_SItoSLM` and
+%   `function_SLMtoSI` to map between spaces for online targeting.
+%
+% Expected environment
+% - MATLAB with required toolboxes + hardware SDKs installed (SLM, camera).
+% - Access to `MESOHOLO_CALIB_PATH` containing `ActiveCalib.mat` (variable `CoC`).
+% - A MATLAB msocket implementation on the path (`mslisten`, `msaccept`, `msrecv`, `mssend`).
+% - This script assumes you are on the *hologram computer* and that DAQ/SI
+%   machines run their companion “prep/handshake” scripts.
+%
+% Outputs
+% - Saves a timestamped `*_Calib.mat` and updates `ActiveCalib.mat` in
+%   `MESOHOLO_CALIB_PATH`. Also saves a workspace snapshot for debugging.
+%
+% Notes on style / provenance
+% - This script evolved over years of in-rig iteration. The goal of the
+%   comments/sections below is to make the intent of each stage obvious,
+%   even if you don’t run this end-to-end on a different rig.
 
 %% Close stuff
 try
@@ -17,7 +43,31 @@ end
 % clear;close all;clc
 imaqreset
 
-%% Pathing
+%% Configuration (set these instead of editing scattered constants)
+cfg = struct();
+
+% - **Hardware selection**
+cfg.useGPU = true;
+cfg.useThorCam = false;          % false -> Basler path (default)
+cfg.sutterPort = 'COM6';
+
+% - **Camera acquisition defaults**
+cfg.maxFramesPerAcquire = 10;    % 0 for unlimited
+cfg.camExposureTime = 50000;
+cfg.camGain = 1;
+cfg.thorRoiX = 650:1250;
+cfg.thorRoiY = 250:850;
+
+% - **SLM sampling range (must lie inside imaging FOV)**
+cfg.slmXrange = [0.33 0.67];
+cfg.slmYrange = [0.33 0.67];
+cfg.slmZrange = [-0.05 0.05];
+
+% - **mSocket**
+cfg.msocketListenPort = 3054;
+cfg.msocketAcceptTimeoutSec = 30;
+
+%% Pathing / repo setup
 tBegin = tic;
 rmpath(genpath('C:\Users\MesoSI\Desktop\FromHoloComp'))
 mesoholo_setup();
@@ -34,37 +84,32 @@ pathToUse = [char(calibPath) filesep];
 
 disp('done pathing')
 
-%% Clear and set SLM range
+%% Define SLM coordinate sampling range for this calibration run
 
 % First, make sure your slm ranges are in the imaging fov.
 % Use imaging zoom level that you want to use for calibration and turn focus on SI
 % Run QuickSLMHolo at close to boundary coords to map out the 4 corners of
 % imaging square/rectangle
 
-%ranges set by explo5ration moving holograms looking at z1 fov.
-%slmXrange = [0.15 0.85];
-%slmYrange = [0.15 0.85];
-%slmZrange = [-0.09 0.05];
-slmXrange = [0.33 0.67];
-slmYrange = [0.33 0.67];
-%slmZrange = [-0.09 0.05];
-slmZrange = [-0.05;0.05];
+slmXrange = cfg.slmXrange;
+slmYrange = cfg.slmYrange;
+slmZrange = cfg.slmZrange;
 %slmz0 = img 0 (<10um offset), slmz+0.1=-150 above, slmz-0.1=+125 below
 %20221213
 
-%% Setup Stuff
+%% Setup hardware interfaces (SLM, camera, sutter) and runtime parameters
 disp('Setting up stuff...');
 
 [Setup ] = function_loadparameters2();
 Setup.CGHMethod=2;
 Setup.GSoffset=0;
 Setup.verbose =0;
-Setup.useGPU =1;
+Setup.useGPU = double(cfg.useGPU);
 
-Setup.useThorCam = 0;
-Setup.maxFramesPerAcquire = 10; %set to 0 for unlimited (frames will return will be
-Setup.camExposureTime = 50000;
-Setup.camGain = 1;
+Setup.useThorCam = double(cfg.useThorCam);
+Setup.maxFramesPerAcquire = cfg.maxFramesPerAcquire; % 0 for unlimited
+Setup.camExposureTime = cfg.camExposureTime;
+Setup.camGain = cfg.camGain;
 
 if Setup.useGPU
     disp('Getting gpu...'); %this can sometimes take a while at initialization
@@ -75,6 +120,7 @@ end
 [ Setup.SLM ] = Function_Start_SLM( Setup.SLM );
 
 Setup.Sutterport ='COM6';
+Setup.Sutterport = cfg.sutterPort;
 if ~isempty(instrfind)
     fclose(instrfind);
     delete(instrfind);
@@ -93,8 +139,8 @@ if Setup.useThorCam
     camMax = 65535;
 %     Setup.xroi = 1:1920;
 %     Setup.yroi = 1:1080;
-    Setup.xroi = 650:1250;
-    Setup.yroi = 250:850;
+    Setup.xroi = cfg.thorRoiX;
+    Setup.yroi = cfg.thorRoiY;
 else
     castImg = @uint8;
     castAs = 'uint8';
@@ -106,14 +152,14 @@ end
 function_BasPreview(Setup); % Exposure time is internally set here, see thorPreview
 
 
-%% Make mSocketConnections with DAQ and SI Computers 
+%% Make mSocket connections with DAQ/SI computers (handshake)
 %initialize this section and then start the msocket on DAQ comp -
 %DAQcalibration script
 
 disp('Waiting for msocket communication From DAQ')
 %then wait for a handshake
-srvsock = mslisten(3054);
-masterSocket = msaccept(srvsock,30);
+srvsock = mslisten(cfg.msocketListenPort);
+masterSocket = msaccept(srvsock,cfg.msocketAcceptTimeoutSec);
 msclose(srvsock);
 sendVar = 'A';
 mssend(masterSocket, sendVar);
@@ -3459,6 +3505,9 @@ burnFitsT = toc(burnFitsTimer);
 disp('Saving...')
 tSave = tic;
 
+% Save the fitted calibration struct (CoC) in two forms:
+% - a timestamped snapshot for provenance/reproducibility
+% - `ActiveCalib.mat` which is the file loaded by online holo generation
 save(fullfile(pathToUse,[date,'_',datestr(now,'HHMMSS'),'_Calib.mat']),'CoC')
 save(fullfile(pathToUse,'ActiveCalib.mat'),'CoC')
 
@@ -3483,6 +3532,10 @@ save(fullfile(pathToUse,'ActiveCalib.mat'),'CoC')
 
 totT = toc(tBegin);
 times.totT = totT;
+
+% Save full workspace for debugging. This is intentionally large and is not
+% meant for routine versioning; it captures intermediate variables that can
+% be invaluable when diagnosing calibration failures or regressions.
 save(fullfile([pathToUse,'CalibWorkspace_',date,'_',datestr(now,'HHMMSS'),'.mat']),'-v7.3','-nocompression');
 disp(['Saving took ' num2str(toc(tSave)) 's']);
 
