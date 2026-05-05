@@ -2,7 +2,17 @@ function powerCurveAcqCallback_uday(src,evt,varargin)
     %global file_ends
     global DAQSocket
     persistent PSTHs powers
-    gfrate = round(3); %%%% IMP SET THIS!!!!
+    % This callback runs on the ScanImage PC and receives per-trial timing
+    % metadata from the DAQ PC over msocket. It then extracts ROI integration
+    % traces from ScanImage’s buffer and updates online PSTHs.
+
+    %% Configuration (toggle behavior here)
+    cfg = struct();
+    cfg.gfrate = round(3);            % imaging rate in Hz used for PSTH binning
+    cfg.safeFillOnError = true;       % if PSTH computation fails, fill with NaNs (keeps online loop alive)
+    cfg.usePPSFStimTimes = false;     % PPSF/debug mode: use same stim time for all ROIs
+
+    gfrate = cfg.gfrate;
     tic;
     hSI = src.hSI; % get the handle to the ScanImage model
 
@@ -75,21 +85,30 @@ function powerCurveAcqCallback_uday(src,evt,varargin)
 
         end
         
-        %TODO: make this a catch that fills nans if errors
         holostimTimes = trialVals.times;
         currseq = unique(trialVals.sequence,'stable');
         condrois = trialVals.condRois;
         nrois = size(thisAcqVals,2);
         roistimTimes = zeros(1,nrois);
         for i = 1:nrois
-            parentseq = find(cellfun(@(x) ismember(i,x), condrois));
-            roistimTimes(i) = holostimTimes(currseq==parentseq);
-            %%%% For PPSF
-%             roistimTimes(i) = holostimTimes;
-            %%%%
+            if cfg.usePPSFStimTimes
+                roistimTimes(i) = holostimTimes(1);
+            else
+                parentseq = find(cellfun(@(x) ismember(i,x), condrois));
+                roistimTimes(i) = holostimTimes(currseq==parentseq);
+            end
         end
-        PSTHs(size(PSTHs,1)+1,:,:) = getTrialPSTH_uday(thisAcqVals,...
-            roistimTimes*HzPerVol+1, 2*gfrate, 5*gfrate); % 15,45 for 1 plane, 4,12
+
+        try
+            PSTHs(size(PSTHs,1)+1,:,:) = getTrialPSTH_uday(thisAcqVals,...
+                roistimTimes*HzPerVol+1, 2*gfrate, 5*gfrate); % 15,45 for 1 plane, 4,12
+        catch
+            if cfg.safeFillOnError
+                PSTHs(size(PSTHs,1)+1,:,:) = NaN(1, 5*gfrate, nrois);
+            else
+                rethrow(lasterror); %#ok<LERR>
+            end
+        end
         powers = [powers, trialVals.power];
 
         assignin('base','powers', powers)

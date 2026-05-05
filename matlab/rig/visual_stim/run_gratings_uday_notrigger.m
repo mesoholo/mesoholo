@@ -36,7 +36,11 @@ result = p.Results;
 result.sizes = round(polyvaln(result.sscfit,...
     [result.DScreen*ones(length(result.sizes0),1),result.sizes0'])');
 
-addpath(genpath('C:/Users/scanimage/Documents/MATLAB/FrankenRigVisCode/GitHub/msocket/'))
+mesoholo_setup();
+visPath = getenv("MESOHOLO_VIS_PATH");
+if strlength(visPath) > 0
+    addpath(genpath(char(visPath)));
+end
 d = configure_mcc_daq;
 
 % currently  no msocketed version, may exist in the future

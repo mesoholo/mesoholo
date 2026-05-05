@@ -41,7 +41,11 @@ result = p.Results;
 result.oscbarwidth = round(polyvaln(result.sscfit,...
     [result.DScreen,result.oscbarwidth0]));
 
-addpath(genpath('C:/Users/scanimage/Documents/MATLAB/FrankenRigVisCode/GitHub/msocket/'))
+mesoholo_setup();
+visPath = getenv("MESOHOLO_VIS_PATH");
+if strlength(visPath) > 0
+    addpath(genpath(char(visPath)));
+end
 d = configure_mcc_daq;
 
 if result.repetitions < numel(result.contrast_list)

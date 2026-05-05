@@ -8,28 +8,33 @@ disp('Number of Holographic FOVs in current SI mesoscale FOV:');
 disp(size(indexestosave,1));
 %You can now Update the integrations tab: ROIs with centers of holographic
 %FOVs should be displayed on the ROI Group Editor 
-%% %% Paths and main variables
-% clearvars -EXCEPT hSI hSICtl extdata_all_sparser
+%% Paths and dataset selection
+% This script was historically run as a one-off per experiment day and
+% edited by commenting/uncommenting blocks. Configure the dataset below.
 mesoholo_setup();
-% corepath = 'F:\CalciumImagingData\Mesoscope\'; % core path
-corepath = 'D:\Uday\'; % core path
-% corepath = 'P:\uday\Meso\data\MesoSIDataShare\'; % core path
-% corepath = 'D:\HS\';
-mouseid = 'MU76_2_aav189'; % name of main mouse folder inside core path
-date = '20260503/000'; % folder with the TIFF data, organized in numbered folders
+
+cfg = struct();
+cfg.corepath = getenv("MESOHOLO_DATA_ROOT");
+if strlength(cfg.corepath) == 0
+    cfg.corepath = 'D:\Uday\'; % legacy default; override via MESOHOLO_DATA_ROOT
+else
+    cfg.corepath = [char(cfg.corepath) filesep];
+end
+
+cfg.mouseid = 'MU76_2_aav189'; % name of main mouse folder inside core path
+cfg.date = '20260503/000'; % folder with the TIFF data, organized in numbered folders
                   % The numbered folders are in sequence from the
                    % posterio-medial location going left M->L, then one row up P->A
                    % and then right L->M and so on, change as needed
                    % The superficial/vasculature fov tiffs for all fovs are also located directly in this
 
 % Imaging settings
-nplanes = 1;
-nchannels = 1;
-chantouse = 1; % 1 for green, 2 for red
-planetouse = 1;
-gfrate = 3; % imaging frame rate (i.e., "green frame rate")
+cfg.nplanes = 1;
+cfg.nchannels = 1;
+cfg.chantouse = 1; % 1 for green, 2 for red
+cfg.planetouse = 1;
 
-root = [corepath,mouseid,'\',date,'\'];
+root = [cfg.corepath, cfg.mouseid,'\',cfg.date,'\'];
 currjson = extractjsonparams(root);
 currxpix = currjson.Lx(1); %184,620
 currxum = currjson.szXY(1,2)*150;
@@ -38,7 +43,7 @@ curryum = currjson.szXY(1,1)*150;
 ntilex = currjson.nrois;
 imsize = [currypix,currxpix*ntilex];
 
-gfrate = round(currjson.fs);
+gfrate = round(currjson.fs); % derived from JSON
 
 fs = dir(fullfile(root, '*.tif'));
 fname = fs(1).name;
@@ -72,12 +77,7 @@ clear img
 nstrips = ntilex;
 for n=1:nstrips
     ImageData = mean(gframes(1:currypix,(n-1)*currxpix+(1:currxpix),:),3);
-%     skImageData = var(gframes(1:currypix,(n-1)*currxpix+(1:currxpix),:),0,3);
-% %     ImageData = max(gframes(1:currypix,(n-1)*currxpix+(1:currxpix),:),[],3);
-% %     ImageData = mean(gframes(1:currypix,(n-1)*currxpix+(1:currxpix),:),3).*...
-% %         sqrt(max(gframes(1:currypix,(n-1)*currxpix+(1:currxpix),:),[],3));
     img{n} = real(ImageData);
-%     skimg{n} = real(skImageData);
 end
 
 % img{3}=zeros(512,512,3);

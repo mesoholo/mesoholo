@@ -2647,7 +2647,21 @@ modelterms =[0 0 0; 1 0 0; 0 1 0; 0 0 1;...
     2 2 0; 2 0 2; 0 2 2; 2 1 1; 1 2 1; 1 1 2; ];  %XY spatial calibration model for Power interpolations
 
 intVal = basVal4;
-intVal(intVal>13)=13; %%%% TEMPORARY FOR 08/09/23 CALIB
+%% Optional: clamp extreme fluorescence values (calibration-specific safeguard)
+% Some calibration sessions can produce a few saturated/over-bright points
+% that distort the SLM->power fit. Use this clamp to limit their influence.
+if ~exist('cfg','var')
+    cfg = struct();
+end
+if ~isfield(cfg,'clampFluorescence')
+    cfg.clampFluorescence = true; % preserves prior behavior
+end
+if ~isfield(cfg,'fluorescenceClampMax')
+    cfg.fluorescenceClampMax = 13;
+end
+if cfg.clampFluorescence
+    intVal(intVal > cfg.fluorescenceClampMax) = cfg.fluorescenceClampMax;
+end
 intVal = sqrt(intVal); %convert fluorescence intensity (2P) to 1P illumination intensity
 intVal=intVal./max(intVal(:));
 
