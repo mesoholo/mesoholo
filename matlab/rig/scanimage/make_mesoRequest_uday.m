@@ -1,6 +1,28 @@
 function [ mesoRequest ] = make_mesoRequest_uday(all_XYnew,all_centersZ,all_yoffsets,all_xoffsets,xrotate,yrotate,all_zMaps,all_AO0s,all_AO1s,all_powers,hSI,Zplanes,powcurve)
-%make_mesoRequest: Generates mesoscale holoRequest 
-%   Detailed explanation goes here
+%make_mesoRequest_uday  Build a multi-FOV mesoscale holoRequest struct.
+%
+% This function collates targets from multiple ScanImage FOVs into a single
+% request structure written to the shared Holorequest folders. Historically,
+% several experimental modes were toggled by commenting/uncommenting blocks;
+% those are now controlled via `cfg` below.
+
+%% Configuration (toggle behavior here)
+cfg = struct();
+
+% - **Save behavior**
+cfg.saveToShared = true;  % write to HoloRequest_SI and HoloRequest_DAQ
+
+% - **Weight/randomization modes**
+% Some experiments used synthetic/random desired activation patterns to test
+% power-curve fitting and pattern generation. Set this false for "normal"
+% targeting behavior (no `roiWeights`/desired vectors added).
+cfg.randomDesiredF = struct();
+cfg.randomDesiredF.enabled = true;     % preserves current script behavior
+cfg.randomDesiredF.nGroups = 50;
+cfg.randomDesiredF.baseLevel = 0.5;    % baseline desired (0..1) per ROI
+cfg.randomDesiredF.minLevel = 0.05;
+cfg.randomDesiredF.maxLevel = 1.0;
+
 loc = MesoLocFile_SI();
 mesoRequest.objective = 20;
 mesoRequest.zoom = hSI.hRoiManager.scanZoomFactor;
@@ -96,131 +118,63 @@ for f = 1:nfovs
 
 end
 
-%%%% Temp Uday 08/06/24 random patterns at weight level - comment out
-% ncells = 51;
-% ngroups = 50;
-% mesoRequest.roiWeights = ones(1,ncells);
-% mesoRequest.roiWeights = [mesoRequest.roiWeights;linspace(0.05,1,ncells)];
-% mesoRequest.roiWeights = [mesoRequest.roiWeights;linspace(1,0.05,ncells)];
-% for i=4:ngroups
-%     mesoRequest.roiWeights = [mesoRequest.roiWeights;0.05+0.95*rand(1,ncells)];
-% end
-% mesoRequest.roiWeights = ncells*mesoRequest.roiWeights./sum(mesoRequest.roiWeights,2);
-% mesoRequest.groupID = [];
-% for i=1:ngroups
-%     mesoRequest.groupID = [mesoRequest.groupID;i*ones(1,ncells)];
-% end
-% mesoRequest.groupID = mesoRequest.groupID';
-% mesoRequest.groupID = mesoRequest.groupID(:);
-% mesoRequest.AO0 = repmat(mesoRequest.AO0,[1,ngroups]);
-% mesoRequest.AO1 = repmat(mesoRequest.AO1,[1,ngroups]);
-% mesoRequest.powerfactors = repmat(mesoRequest.powerfactors,[1,ngroups]);
-% mesoRequest.xoffset = repmat(mesoRequest.xoffset,[1,ngroups]);
-% mesoRequest.yoffset = repmat(mesoRequest.yoffset,[1,ngroups]);
-%%%%
+%% Optional: generate synthetic desired-F patterns and convert to roiWeights
+if cfg.randomDesiredF.enabled
+    allvalmat = powcurve.allvalmat;
+    satinds = powcurve.satinds;
+    allpows = powcurve.allpows;
 
-%%%% Temp Uday 08/19/24 random patterns at dF level - comment out
-goodcells = powcurve.goodcells;
-satpows = powcurve.satpows;
-satinds = powcurve.satinds;
-allvalmat = powcurve.allvalmat;
-allpowmat = powcurve.allpowmat;
-allpows = powcurve.allpows;
-ncells = length(goodcells);
-ngroups = 50;
-%%%% For random F recreation
-desiredvec = 0.5*ones(1,ncells);
-% desiredvec(1,:) = desiredvec(1,:).*allvalmat(:,end)';
-for i=2:ngroups
-    if(i==2)
-        desiredvec = [desiredvec;0.05+0.95*rand(1,ncells)];
-%         desiredvec(i,:) = desiredvec(i,:).*allvalmat(:,end)';
-    else
-        desiredvec = [desiredvec;desiredvec(2,randperm(ncells))];
+    ncells = length(powcurve.goodcells);
+    ngroups = cfg.randomDesiredF.nGroups;
+
+    % Build desired patterns (0..1) then scale by each ROI’s max response.
+    desired01 = cfg.randomDesiredF.baseLevel * ones(1, ncells);
+    for i = 2:ngroups
+        if i == 2
+            desired01 = [desired01; cfg.randomDesiredF.minLevel + ...
+                (cfg.randomDesiredF.maxLevel - cfg.randomDesiredF.minLevel) * rand(1, ncells)];
+        else
+            desired01 = [desired01; desired01(2, randperm(ncells))];
+        end
     end
-end
-%%%%
-%%%% For vis vec recreation
-% desiredvec = powcurve.visvec;
-% desiredvec = [desiredvec;mean(desiredvec)*ones(1,ncells)];
-% for i=3:ngroups
-%     desiredvec = [desiredvec;desiredvec(1,randperm(ncells))];
-% end
-%%%% For random F recreation w/average patterns
-% nbasepatterns = 5;
-% desiredvec = [];
-% for i=1:nbasepatterns
-%     if(i==1)
-%         desiredvec = [desiredvec;0.1+0.9*rand(1,ncells)];
-%         desiredvec(i,:) = desiredvec(i,:).*allvalmat(:,end)';
-%     elseif(i==2)
-%         [~,indsd] = sort(mean(desiredvec(1:i-1,:),1),'descend');
-%         [~,indsa] = sort(mean(desiredvec(1:i-1,:),1),'ascend');
-%         tempvec = mean(desiredvec(1:i-1,:),1);
-%         tempvec(indsd) = tempvec(indsa);
-%         desiredvec = [desiredvec;tempvec];
-%     else
-%         nranditer = 100000;
-%         tempvecmat = zeros(nranditer,ncells);
-%         for j=1:nranditer
-%             tempvecmat(j,:) = desiredvec(1,randperm(ncells));
-%         end
-%         tempsimvec = corr(tempvecmat',desiredvec');
-%         tempsimvec(tempsimvec>=-0.05)=NaN;
-%         [~,tempsiminds] = sort(mean(tempsimvec,2),'ascend');
-%         desiredvec = [desiredvec;tempvecmat(tempsiminds(1),:)];
-%     end
-% end
-% % desiredvec = (desiredvec./sum(desiredvec,2))*ncells/2;
-% desiredvec = desiredvec*2;
-% for i=1:nbasepatterns
-%     for j=i+1:nbasepatterns
-%         desiredvec = [desiredvec;(desiredvec(i,:)+desiredvec(j,:))/2];
-%     end
-% end
-% %%%% Additional 5 vectors half of original so the previous means are the
-% %%%% sums of these
-% for i=1:nbasepatterns
-%     desiredvec = [desiredvec;desiredvec(i,:)/2];
-% end
-% ngroups = size(desiredvec,1)
-%%%%
-% desiredvec = desiredvec./allvalmat(:,end)';
-%%%% 
-mesoRequest.desiredvec = [];
-mesoRequest.desiredFvec = [];
-mesoRequest.roiWeights = [];
-for i=1:ngroups
-    mesoRequest.desiredvec = [mesoRequest.desiredvec;desiredvec(i,:)];
-    desiredvec(i,:) = desiredvec(i,:).*allvalmat(:,end)';
-    [~,p0inds] = min(abs(allvalmat-desiredvec(i,:)'),[],2);
-    p0inds(p0inds==length(allpows)) = satinds(p0inds==length(allpows));
-    p0 = [];
-    for j=1:length(p0inds)
-        p0 = [p0;allpows(p0inds(j))];
+
+    mesoRequest.desiredvec = desired01;
+    mesoRequest.desiredFvec = [];
+    mesoRequest.roiWeights = [];
+
+    for i = 1:ngroups
+        desiredF = desired01(i,:) .* allvalmat(:,end)'; % scale to per-ROI max
+        [~,p0inds] = min(abs(allvalmat - desiredF'), [], 2);
+        p0inds(p0inds==length(allpows)) = satinds(p0inds==length(allpows));
+
+        p0 = zeros(length(p0inds),1);
+        for j = 1:length(p0inds)
+            p0(j) = allpows(p0inds(j));
+        end
+
+        mesoRequest.roiWeights = [mesoRequest.roiWeights; p0'];
+        mesoRequest.desiredFvec = [mesoRequest.desiredFvec; desiredF];
     end
-    mesoRequest.roiWeights = [mesoRequest.roiWeights;p0'];
-    mesoRequest.desiredFvec = [mesoRequest.desiredFvec;desiredvec(i,:)];
+
+    % Expand group-level metadata to per-pattern groups.
+    mesoRequest.groupID = [];
+    for i = 1:ngroups
+        mesoRequest.groupID = [mesoRequest.groupID; i*ones(ncells,1)];
+    end
+    mesoRequest.AO0 = repmat(mesoRequest.AO0,[1,ngroups]);
+    mesoRequest.AO1 = repmat(mesoRequest.AO1,[1,ngroups]);
+    mesoRequest.powerfactors = repmat(mesoRequest.powerfactors,[1,ngroups]);
+    mesoRequest.xoffset = repmat(mesoRequest.xoffset,[1,ngroups]);
+    mesoRequest.yoffset = repmat(mesoRequest.yoffset,[1,ngroups]);
 end
-mesoRequest.groupID = [];
-for i=1:ngroups
-    mesoRequest.groupID = [mesoRequest.groupID;i*ones(1,ncells)];
-end
-mesoRequest.groupID = mesoRequest.groupID';
-mesoRequest.groupID = mesoRequest.groupID(:);
-mesoRequest.AO0 = repmat(mesoRequest.AO0,[1,ngroups]);
-mesoRequest.AO1 = repmat(mesoRequest.AO1,[1,ngroups]);
-mesoRequest.powerfactors = repmat(mesoRequest.powerfactors,[1,ngroups]);
-mesoRequest.xoffset = repmat(mesoRequest.xoffset,[1,ngroups]);
-mesoRequest.yoffset = repmat(mesoRequest.yoffset,[1,ngroups]);
-%%%%
 
 
-try
-    save([loc.HoloRequest_SI 'holoRequest.mat'],'mesoRequest');
-    save([loc.HoloRequest_DAQ 'holoRequest.mat'],'mesoRequest');
-catch
-    disp('****WARNING: HOLOREQUEST SAVE ERROR!!! Find another way...****')
-
+if cfg.saveToShared
+    try
+        save([loc.HoloRequest_SI 'holoRequest.mat'],'mesoRequest');
+        save([loc.HoloRequest_DAQ 'holoRequest.mat'],'mesoRequest');
+    catch
+        disp('****WARNING: HOLOREQUEST SAVE ERROR!!! Find another way...****')
+    end
 end
 

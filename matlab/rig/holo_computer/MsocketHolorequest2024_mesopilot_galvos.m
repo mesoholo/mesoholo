@@ -4,6 +4,15 @@
 %clear all
 timeout = 5000;
 
+%% Configuration (toggle behavior here)
+cfg = struct();
+cfg.applyShearCorrection = false;  % legacy "quick fix" for anisotropic offsets
+cfg.shear = struct();
+cfg.shear.rxDelta = 0;
+cfg.shear.lxDelta = 0;
+cfg.shear.right = struct('dx', 0.025, 'dy', 0.01, 'pow', 1);
+cfg.shear.left  = struct('dx', 0.025, 'dy', 0.015,'pow', 1);
+
 mesoholo_setup();
 disp('done pathing')
 
@@ -88,33 +97,34 @@ if ~isfield(holoRequest,'ignoreROIdata')  %if we're doing things normally  %igno
     SLMCoordinates = zeros(4,LN);
     
 else  %if I'm doing a custom sequence
-    disp('SANITY CHECK');
   LN = size(holoRequest.targets,1);  %for blind mapping LN=216
     SLMCoordinates = zeros(4,LN);  
-    for t=1:LN
-    SICoordinates = holoRequest.targets; %assign SI coordinates to targets fetched from HoloRequest struct size 216x3
-    SICoordinates(:,1)=SICoordinates(:,1)+holoRequest.xoffset(holoRequest.groupID(t)); % first column x corrected by xoffset
-    SICoordinates(:,2)=SICoordinates(:,2)+holoRequest.yoffset(holoRequest.groupID(t)); 
-    end% same for y  
-    SICoordinates=SICoordinates'; %transform,now each row is a x,y,z dim and column is number of consecutive target
+    SICoordinates = holoRequest.targets; % Nx3: [x y z] in SI coordinates
+    % Apply group-level XY offsets (xoffset/yoffset are indexed by groupID).
+    for t = 1:LN
+        g = holoRequest.groupID(t);
+        SICoordinates(t,1) = SICoordinates(t,1) + holoRequest.xoffset(g);
+        SICoordinates(t,2) = SICoordinates(t,2) + holoRequest.yoffset(g);
+    end
+    SICoordinates = SICoordinates'; % 3xN for downstream code
 end
 %%quickly compute Difraction Efficiencies (DE)  and return them over
 %%msocket (that is used by H for power balancing fitting)
 
-%%%%%%%%% Quick fix for anisotropic offsets (shear) - Uday 10/11/2022
+%% Optional: anisotropic "shear" correction (legacy calibration workaround)
 xcenter = mean(SICoordinates(2,:));
-% xcenter = 600;
-rxcenter = xcenter+0;
-lxcenter = xcenter-0;
-% SICoordinates(1,SICoordinates(2,:)>rxcenter) = SICoordinates(1,SICoordinates(2,:)>rxcenter)-...
-%     0.025*(xcenter-SICoordinates(2,SICoordinates(2,:)>rxcenter)).^1;
-% SICoordinates(2,SICoordinates(2,:)>rxcenter) = SICoordinates(2,SICoordinates(2,:)>rxcenter)-...
-%     0.01*(xcenter-SICoordinates(2,SICoordinates(2,:)>rxcenter)).^1;
-% SICoordinates(1,SICoordinates(2,:)<lxcenter) = SICoordinates(1,SICoordinates(2,:)<lxcenter)-...
-%     0.025*(xcenter-SICoordinates(2,SICoordinates(2,:)<lxcenter)).^1;
-% SICoordinates(2,SICoordinates(2,:)<lxcenter) = SICoordinates(2,SICoordinates(2,:)<lxcenter)-...
-%     0.015*(xcenter-SICoordinates(2,SICoordinates(2,:)<lxcenter)).^1;
-%%%%%%%%% End offset correction
+rxcenter = xcenter + cfg.shear.rxDelta;
+lxcenter = xcenter - cfg.shear.lxDelta;
+if cfg.applyShearCorrection
+    rMask = SICoordinates(2,:) > rxcenter;
+    lMask = SICoordinates(2,:) < lxcenter;
+
+    SICoordinates(1,rMask) = SICoordinates(1,rMask) - cfg.shear.right.dx * (xcenter - SICoordinates(2,rMask)).^cfg.shear.right.pow;
+    SICoordinates(2,rMask) = SICoordinates(2,rMask) - cfg.shear.right.dy * (xcenter - SICoordinates(2,rMask)).^cfg.shear.right.pow;
+
+    SICoordinates(1,lMask) = SICoordinates(1,lMask) - cfg.shear.left.dx  * (xcenter - SICoordinates(2,lMask)).^cfg.shear.left.pow;
+    SICoordinates(2,lMask) = SICoordinates(2,lMask) - cfg.shear.left.dy  * (xcenter - SICoordinates(2,lMask)).^cfg.shear.left.pow;
+end
 
 if isfield(holoRequest,'roiWeights')   %holorequest do not have roiWeights feature at the start, Daq needs to change the struct
     weightsToUse = holoRequest.roiWeights;

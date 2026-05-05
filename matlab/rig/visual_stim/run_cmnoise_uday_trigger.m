@@ -39,7 +39,11 @@ p.parse(varargin{:});
 
 result = p.Results;
 
-addpath(genpath('C:/Users/scanimage/Documents/MATLAB/FrankenRigVisCode/GitHub/msocket/'))
+mesoholo_setup();
+visPath = getenv("MESOHOLO_VIS_PATH");
+if strlength(visPath) > 0
+    addpath(genpath(char(visPath)));
+end
 d = configure_mcc_daq;
 
 % ydayResult = load('E:\Uday\StimData\231115\MU46_1\MU46_1_200_002.mat');

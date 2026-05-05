@@ -1,12 +1,41 @@
 %%
 clear all;
 close all;
-savePath = 'C:\Data\'
 
 formatOut = 'yymmdd';
 date=num2str(datestr(now,formatOut));
 
 mesoholo_setup();
+
+%% Run configuration (toggle behavior here instead of commenting blocks)
+cfg = struct();
+
+% - **Rig integration**
+cfg.sendToSI = false;        % connect + send per-trial info to ScanImage PC
+cfg.visStimEnabled = true;   % DAQ expects visual stimulus PC condition pulses
+cfg.onlyVisFlag = false;     % run only visual stim (no holo) but keep DAQ loop
+
+% - **Trial count**
+% If vis stim is enabled, repeats are derived from vis PC condition/repetition count.
+cfg.holoOnlyRepeats = 5;
+cfg.nVisConds = 2;
+cfg.nVisReps = 4;
+
+% - **Grouping / stimulation modes**
+% 'single': each target gets its own groupID (one target per "group")
+% 'all': all targets share a single groupID
+% 'existing': use whatever groupID was saved into holoRequest (if present)
+cfg.groupMode = 'single';
+
+% - **PPSF (point spread function) style sweeps**
+cfg.ppsf = struct();
+cfg.ppsf.enabled = false;
+cfg.ppsf.xRange = -40:10:40;
+cfg.ppsf.zRange = -80:10:80;
+
+%% Paths and experiment naming
+locations = MesoLocFile_DAQ();
+savePath = locations.localSavePath;
 
 disp('run msocket holorequest on holo computer before continuing!')
 ExpStruct.mouseID = input('please enter mouse ID: ','s');
@@ -18,53 +47,35 @@ end
 [ ExperimentName ] = autoExptname1(savePath, ExpStruct.mouseID);
 
 
-%% pair to SI computer (run this first, then run DAQmSocketPrep 
-% RESTART HERE IF YOU NEED TO TRY TO CONNECT TO SI COMPUTER ONLY AGAIN
-sendSI = 0;
-if(sendSI)
+%% Optional: connect to ScanImage PC (msocket)
+if cfg.sendToSI
     disp('going to connect to SI');
     SISocket = SImsocketPrep;
     ExpStruct.SISocket = SISocket;
 end
-%% load hr
-locations = MesoLocFile_DAQ();
-load([locations.HoloRequest_DAQ 'holoRequest.mat']);
-%holoRequest = ExpStruct.holoRequest;
-% holoRequest.targets = rand(5,3);
-holoRequest.groupID = (1:size(holoRequest.targets,1))'; % single targ
-% holoRequest.groupID = ones(size(holoRequest.targets,1),1); % all at once
-% holoRequest.groupID = [ones(5,1),2*ones(5,1),3*ones(5,1),4*ones(5,1)];
-% holoRequest.groupID = holoRequest.groupID(randperm(20));
-%%%%
-%  targets = holoRequest.targets;
-%  holoRequest.targets = [];
-%  holoRequest.groupID = [];
-%  ntargspergroup = [10,10,10,50];
-%  for i=1:4
-%      currinds = randperm(size(targets,1));
-%      currinds = currinds(1:ntargspergroup(i));
-%      holoRequest.targets = [holoRequest.targets;targets(currinds,:)]; 
-%      holoRequest.groupID = [holoRequest.groupID;i*ones(ntargspergroup(i),1)];
-%  end
-%%%%
 
-% stimmableinds = [2;4;6;9;11;12;16;17;25;26];
-% allinds = (1:length(holoRequest.groupID))';
-% notinds = allinds(~ismember(allinds,stimmableinds));
-% holoRequest.groupID(stimmableinds)=1;
-% holoRequest.groupID(notinds) = 2;
+%% Load holoRequest produced on SI-side
+load([locations.HoloRequest_DAQ 'holoRequest.mat']);
+if ~isfield(holoRequest, 'groupID') || strcmpi(cfg.groupMode, 'single')
+    % Default: one target per holo group (common for stim tests / mapping).
+    holoRequest.groupID = (1:size(holoRequest.targets,1))';
+elseif strcmpi(cfg.groupMode, 'all')
+    holoRequest.groupID = ones(size(holoRequest.targets,1),1);
+elseif strcmpi(cfg.groupMode, 'existing')
+    % Keep groupID as stored in holoRequest.mat
+else
+    error('Unknown cfg.groupMode: %s', cfg.groupMode);
+end
 
 %%
-expParams.onlyvisflag = 0; %%%% SET THIS IMP!!!!
-expParams.visflag = 1; % Set to 1 if running in conjunction with vis stim
+expParams.onlyvisflag = logical(cfg.onlyVisFlag);
+expParams.visflag = logical(cfg.visStimEnabled);
 if(~expParams.visflag)
-    expParams.repeats = 5; % Set this to a specific number for holo only
+    expParams.repeats = cfg.holoOnlyRepeats;
 else
     % If vis stim yes, then set these based on number of conditions and
     % repetitions on vis stim PC
-    nvisconds = 2;
-    nvisreps = 4;
-    expParams.repeats = nvisconds*nvisreps; % This is the repeats per Holo
+    expParams.repeats = cfg.nVisConds * cfg.nVisReps; % repeats per holo condition
 end
 
 if(isfield(holoRequest,'roiWeights') & ~isfield(holoRequest,'oroiWeights'))
@@ -90,31 +101,31 @@ if(isfield(holoRequest,'oroiWeights') & size(holoRequest.groupID,1)~=...
     end
 end
 
-%%%% PPSF
-% xrange = -40:10:40;
-% % xrange = -37.5:7.5:37.5;
-% xtargets = []; ytargets = []; ztargets = []; groupID = [];
-% ntargs = size(holoRequest.targets,1);
-% count = 0;
-% for xppsf = xrange
-%     count = count+1;
-%     xtargets = [xtargets;holoRequest.targets(:,1)+xppsf];
-%     ytargets = [ytargets;holoRequest.targets(:,2)];
-%     ztargets = [ztargets;holoRequest.targets(:,3)];
-%     groupID = [groupID;count*ones(ntargs,1)];
-% end
-% zrange = -80:10:80;
-% % zrange = -75:7.5:75;
-% for zppsf = zrange
-%     count = count+1;
-%     xtargets = [xtargets;holoRequest.targets(:,1)];
-%     ytargets = [ytargets;holoRequest.targets(:,2)];
-%     ztargets = [ztargets;holoRequest.targets(:,3)+zppsf];
-%     groupID = [groupID;count*ones(ntargs,1)];
-% end
-% holoRequest.targets = [xtargets,ytargets,ztargets];
-% holoRequest.groupID = groupID;
-%%%%
+%% Optional: PPSF-like coordinate sweeps (debug/calibration mode)
+if cfg.ppsf.enabled
+    xtargets = []; ytargets = []; ztargets = []; groupID = [];
+    ntargs = size(holoRequest.targets,1);
+    count = 0;
+
+    for xppsf = cfg.ppsf.xRange
+        count = count+1;
+        xtargets = [xtargets;holoRequest.targets(:,1)+xppsf];
+        ytargets = [ytargets;holoRequest.targets(:,2)];
+        ztargets = [ztargets;holoRequest.targets(:,3)];
+        groupID = [groupID;count*ones(ntargs,1)];
+    end
+
+    for zppsf = cfg.ppsf.zRange
+        count = count+1;
+        xtargets = [xtargets;holoRequest.targets(:,1)];
+        ytargets = [ytargets;holoRequest.targets(:,2)];
+        ztargets = [ztargets;holoRequest.targets(:,3)+zppsf];
+        groupID = [groupID;count*ones(ntargs,1)];
+    end
+
+    holoRequest.targets = [xtargets,ytargets,ztargets];
+    holoRequest.groupID = groupID;
+end
 
 if(~expParams.onlyvisflag)
     [holoStimParams] = newStimParams_group(holoRequest);
@@ -141,7 +152,7 @@ outParams = holoRequest.outParams;
 outParams.eomOffset = -0.15;
 holoRequest = rmfield(holoRequest,'outParams');
 
-%% pair to msocket holo computer (run MSocketHoloRequest2019_2 on holo comp first
+%% Send holoRequest to hologram computer (msocket)
 holoSocket = Holo_msocketPrep;
 holoRequest = transferHRNoDAQ(holoRequest, holoSocket);
 ExpStruct.holoSocket = holoSocket;
@@ -241,7 +252,7 @@ for iTrial = 1:length(trialConditions)
     outParams.sequenceThisTrial{iTrial} = currsequence; % Actual sequence of hologram rois on this trial, for later analysis
     sendThis = outParams.sequenceThisTrial{iTrial};
     
-    if(sendSI)
+    if(cfg.sendToSI)
     sendThisSI.power = outParams.power(iCond);
     if(sendThisSI.power==0)
         sendThisSI.times = outParams.firstStimTimes{iCond+1};
@@ -273,7 +284,7 @@ for iTrial = 1:length(trialConditions)
     
     % the scan image code doesn't get called until a new acq is started, so
     % this should be run just before a new trial starts
-    if(sendSI)
+    if(cfg.sendToSI)
         msocketSendSI(sendThisSI, ExpStruct);
     end
     

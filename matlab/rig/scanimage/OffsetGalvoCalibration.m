@@ -11,9 +11,17 @@ clearvars -EXCEPT hSI hSICtl
 %calibrate.
 
 
-preload = 1;%Probably more convenient to have a preloaded grid from a previous HB calibration
-if preload==1
-    folderpath = 'S:/Mesoshare/holography/Holorequests/HoloRequest_DAQ/HoleburnCalibOffsets_Galvos/';
+mesoholo_setup();
+
+%% Configuration (toggle behavior here)
+cfg = struct();
+cfg.preloadExisting = true;      % load previous grids from shared folder
+cfg.runSanityChecks = false;     % verify all grids share same non-NaN pattern
+
+locations = MesoLocFile_SI();
+
+if cfg.preloadExisting
+    folderpath = locations.HoloRequest_DAQ_Galvos;
     %Get a list of all .MAT files in the folder. The folder should only
     %have 5 files corresponding to the 5 grids. 
     files = dir(fullfile(folderpath,'*.mat'));
@@ -44,41 +52,27 @@ array = Currfovgrid.Currfovgrid;
 [col,row,numNonNanElements] = getFOVtocalibrate(array,1,0);
 
 %% Sanity check that grids are filled properly
-% array = Yoffsetgrid.Yoffsetgrid;
-% [newcol,newrow,~] = getFOVtocalibrate(array,0,0);
-% if ~isequal(col,newcol)
-%     disp ('Something is off, please check your Y grid');
-% end
-% if ~isequal(row,newrow)
-%     disp ('Something is off, please check your Y grid');
-% end
-% 
-% array = Zoffsetgrid.Zoffsetgrid;
-% [newcol,newrow,newnumNonNanElements] = getFOVtocalibrate(array,0,0);
-% if ~isequal(col,newcol)
-%     disp ('Something is off, please check your Z grid');
-% end
-% if ~isequal(row,newrow)
-%     disp ('Something is off, please check your Z grid');
-% end
-% 
-% array = Tilteaglegrid.Tilteaglegrid;
-% [newcol,newrow,newnumNonNanElements] = getFOVtocalibrate(array,0,0);
-% if ~isequal(col,newcol)
-%     disp ('Something is off, please check your Tilteagle grid');
-% end
-% if ~isequal(row,newrow)
-%     disp ('Something is off, please check your Tilteagle grid');
-% end
-% 
-% array = Powergrid.Powergrid;
-% [newcol,newrow,newnumNonNanElements] = getFOVtocalibrate(array,0,0);
-% if ~isequal(col,newcol)
-%     disp ('Something is off, please check your Power grid');
-% end
-% if ~isequal(row,newrow)
-%     disp ('Something is off, please check your Power grid');
-% end
+if cfg.runSanityChecks
+    array = Yoffsetgrid.Yoffsetgrid;
+    [newcol,newrow,~] = getFOVtocalibrate(array,0,0);
+    if ~isequal(col,newcol), disp ('Something is off, please check your Y grid'); end
+    if ~isequal(row,newrow), disp ('Something is off, please check your Y grid'); end
+
+    array = Zoffsetgrid.Zoffsetgrid;
+    [newcol,newrow,~] = getFOVtocalibrate(array,0,0);
+    if ~isequal(col,newcol), disp ('Something is off, please check your Z grid'); end
+    if ~isequal(row,newrow), disp ('Something is off, please check your Z grid'); end
+
+    array = Tilteaglegrid.Tilteaglegrid;
+    [newcol,newrow,~] = getFOVtocalibrate(array,0,0);
+    if ~isequal(col,newcol), disp ('Something is off, please check your Tilteagle grid'); end
+    if ~isequal(row,newrow), disp ('Something is off, please check your Tilteagle grid'); end
+
+    array = Powergrid.Powergrid;
+    [newcol,newrow,~] = getFOVtocalibrate(array,0,0);
+    if ~isequal(col,newcol), disp ('Something is off, please check your Power grid'); end
+    if ~isequal(row,newrow), disp ('Something is off, please check your Power grid'); end
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% Make and send Holorequest (with custom offsets, tilieagle,power, galvo voltages) for each FOV to calibrate
