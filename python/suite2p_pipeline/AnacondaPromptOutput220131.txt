@@ -1,0 +1,1429 @@
+
+(base) C:\Users\MesoDAQ>conda activate suite2wp
+Could not find conda environment: suite2wp
+You can list all discoverable environments with `conda info --envs`.
+
+
+(base) C:\Users\MesoDAQ>conda activate suite2p
+
+(suite2p) C:\Users\MesoDAQ>python -m suite2p
+2022-01-28 10:06:20,978 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+
+ERROR: this is not a stat.npy file :( (needs stat[n]["ypix"]!)
+incorrect file, not a stat.npy
+loaded default ops
+Input format: mesoscan
+Running suite2p!
+starting process
+{'data_path': ['D:/HS/HS_CamKIIGC6s_59/210617/RFcircleCI1'], 'subfolders': [], 'save_path0': 'D:/HS/HS_CamKIIGC6s_59/210617', 'fast_disk': 'D:/HS/HS_CamKIIGC6s_59/210617', 'input_format': 'mesoscan'}
+
+(suite2p) C:\Users\MesoDAQ>cd Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>nano preprocess2p.sh
+'nano' is not recognized as an internal or external command,
+operable program or batch file.
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>conda install -c conda-forge nano
+Collecting package metadata (current_repodata.json): done
+Solving environment: failed with initial frozen solve. Retrying with flexible solve.
+Collecting package metadata (repodata.json): done
+Solving environment: failed with initial frozen solve. Retrying with flexible solve.
+
+PackagesNotFoundError: The following packages are not available from current channels:
+
+  - nano
+
+Current channels:
+
+  - https://conda.anaconda.org/conda-forge/win-64
+  - https://conda.anaconda.org/conda-forge/noarch
+  - https://repo.anaconda.com/pkgs/main/win-64
+  - https://repo.anaconda.com/pkgs/main/noarch
+  - https://repo.anaconda.com/pkgs/r/win-64
+  - https://repo.anaconda.com/pkgs/r/noarch
+  - https://repo.anaconda.com/pkgs/msys2/win-64
+  - https://repo.anaconda.com/pkgs/msys2/noarch
+
+To search for alternate channels that may provide the conda package you're
+looking for, navigate to
+
+    https://anaconda.org
+
+and use the search bar at the top of the page.
+
+
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>nano mesoscope_json_from_scanimage_210617_59.m
+'nano' is not recognized as an internal or external command,
+operable program or batch file.
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python ~/meso_analysis_code/suite2p_pipeline_210617_59.py
+python: can't open file '~/meso_analysis_code/suite2p_pipeline_210617_59.py': [Errno 2] No such file or directory
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>cd ~
+The system cannot find the path specified.
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-28 11:15:38,546 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py", line 17, in <module>
+    opsjson = json.load(f)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Unterminated string starting at: line 1 column 34056 (char 34055)
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-28 14:56:29,329 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py", line 17, in <module>
+    opsjson = json.load(f)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Unterminated string starting at: line 1 column 34056 (char 34055)
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-28 15:02:22,533 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py", line 17, in <module>
+    opsjson = json.load(f)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Invalid \escape: line 1 column 34059 (char 34058)
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-28 15:59:46,405 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py", line 17, in <module>
+    opsjson = json.load(f)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\__init__.py", line 357, in loads
+    return _default_decoder.decode(s)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Invalid \escape: line 1 column 34059 (char 34058)
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-31 08:09:00,375 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+{}
+NOTE: nplanes 1 nrois 5 => ops['nplanes'] = 5
+mesoscan
+** Found 961 tifs - converting to binary **
+time 140.11 sec. Wrote 3505 frames per binary for 5 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 9.24 sec.
+Registered 1200/3505 in 25.26s
+Registered 2400/3505 in 50.46s
+Registered 3505/3505 in 73.76s
+added enhanced mean image
+----------- Total 96.03 sec
+Registration metrics, 39.65 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1382,412] in 10.64 sec.
+ROIs: 200, cost: 0.5415, time: 21.2585
+ROIs: 400, cost: 0.5340, time: 30.8356
+ROIs: 600, cost: 0.5285, time: 41.1807
+ROIs: 800, cost: 0.5236, time: 52.5498
+ROIs: 1000, cost: 0.5195, time: 64.4564
+ROIs: 1200, cost: 0.5156, time: 77.0103
+ROIs: 1400, cost: 0.5119, time: 90.3437
+ROIs: 1600, cost: 0.5083, time: 104.0011
+ROIs: 1800, cost: 0.5050, time: 118.9454
+ROIs: 1825, cost: 0.5045, time: 132.1190
+ROIs: 1830, cost: 0.5043, time: 144.9045
+ROIs: 1830, cost: 0.5474, time: 151.6928
+ROIs: 1830, cost: 0.5409, time: 161.5174
+ROIs: 1830, cost: 0.5394, time: 168.5943
+Detected 1830 ROIs, 186.79 sec
+After removing overlaps, 1801 ROIs remain
+----------- Total 201.67 sec.
+----------- EXTRACTION
+Masks created, 5.15 sec.
+Extracted fluorescence from 1801 ROIs in 3505 frames, 13.16 sec.
+----------- Total 18.80 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.32 sec.
+deleting binary files
+Plane 0 processed in 358.93 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 1 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 9.17 sec.
+Registered 1200/3505 in 25.00s
+Registered 2400/3505 in 49.73s
+Registered 3505/3505 in 72.96s
+added enhanced mean image
+----------- Total 94.99 sec
+Registration metrics, 38.70 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,412] in 10.13 sec.
+ROIs: 200, cost: 0.5328, time: 22.2085
+ROIs: 400, cost: 0.5272, time: 32.9770
+ROIs: 600, cost: 0.5232, time: 43.9059
+ROIs: 800, cost: 0.5196, time: 55.4943
+ROIs: 1000, cost: 0.5162, time: 68.2114
+ROIs: 1200, cost: 0.5129, time: 81.6784
+ROIs: 1400, cost: 0.5094, time: 96.0680
+ROIs: 1600, cost: 0.5058, time: 111.5497
+ROIs: 1800, cost: 0.5021, time: 127.6507
+ROIs: 1877, cost: 0.5004, time: 142.9808
+ROIs: 1909, cost: 0.4996, time: 158.0120
+ROIs: 1931, cost: 0.4989, time: 172.3456
+ROIs: 1946, cost: 0.4985, time: 186.8236
+ROIs: 1946, cost: 0.5485, time: 194.4368
+ROIs: 1946, cost: 0.5426, time: 206.2880
+ROIs: 1946, cost: 0.5400, time: 216.9321
+Detected 1946 ROIs, 242.67 sec
+After removing overlaps, 1816 ROIs remain
+----------- Total 257.57 sec.
+----------- EXTRACTION
+Masks created, 6.17 sec.
+Extracted fluorescence from 1816 ROIs in 3505 frames, 8.86 sec.
+----------- Total 15.51 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.32 sec.
+deleting binary files
+Plane 1 processed in 409.53 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 2 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 9.09 sec.
+Registered 1200/3505 in 24.89s
+Registered 2400/3505 in 50.10s
+Registered 3505/3505 in 73.42s
+added enhanced mean image
+----------- Total 95.59 sec
+Registration metrics, 37.92 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1386,408] in 10.04 sec.
+ROIs: 200, cost: 0.5300, time: 21.2556
+ROIs: 400, cost: 0.5245, time: 32.0371
+ROIs: 600, cost: 0.5202, time: 43.3100
+ROIs: 800, cost: 0.5166, time: 54.8356
+ROIs: 1000, cost: 0.5132, time: 67.4867
+ROIs: 1200, cost: 0.5099, time: 81.0613
+ROIs: 1400, cost: 0.5067, time: 94.8440
+ROIs: 1600, cost: 0.5035, time: 109.6075
+ROIs: 1720, cost: 0.5015, time: 124.0477
+ROIs: 1749, cost: 0.5008, time: 137.6561
+ROIs: 1769, cost: 0.5004, time: 151.1020
+ROIs: 1782, cost: 0.5000, time: 164.3120
+ROIs: 1782, cost: 0.5470, time: 171.0048
+ROIs: 1782, cost: 0.5414, time: 180.9940
+ROIs: 1782, cost: 0.5394, time: 189.5273
+Detected 1782 ROIs, 210.66 sec
+After removing overlaps, 1718 ROIs remain
+----------- Total 225.02 sec.
+----------- EXTRACTION
+Masks created, 5.71 sec.
+Extracted fluorescence from 1718 ROIs in 3505 frames, 8.68 sec.
+----------- Total 14.85 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.31 sec.
+deleting binary files
+Plane 2 processed in 376.09 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 3 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: -1 pixels
+Reference frame, 8.99 sec.
+Registered 1200/3505 in 26.09s
+Registered 2400/3505 in 52.18s
+Registered 3505/3505 in 76.03s
+added enhanced mean image
+----------- Total 98.30 sec
+Registration metrics, 38.03 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1386,406] in 10.16 sec.
+ROIs: 200, cost: 0.5305, time: 21.6782
+ROIs: 400, cost: 0.5251, time: 31.2863
+ROIs: 600, cost: 0.5209, time: 41.7791
+ROIs: 800, cost: 0.5173, time: 53.0606
+ROIs: 1000, cost: 0.5140, time: 65.0768
+ROIs: 1200, cost: 0.5107, time: 78.0194
+ROIs: 1400, cost: 0.5074, time: 91.7754
+ROIs: 1600, cost: 0.5042, time: 106.2108
+ROIs: 1800, cost: 0.5009, time: 121.7914
+ROIs: 1866, cost: 0.4995, time: 136.2747
+ROIs: 1910, cost: 0.4985, time: 150.5317
+ROIs: 1936, cost: 0.4979, time: 164.5532
+ROIs: 1949, cost: 0.4976, time: 178.6301
+ROIs: 1949, cost: 0.5441, time: 185.7561
+ROIs: 1949, cost: 0.5378, time: 196.7249
+ROIs: 1949, cost: 0.5363, time: 205.8668
+Detected 1949 ROIs, 229.09 sec
+After removing overlaps, 1856 ROIs remain
+----------- Total 243.98 sec.
+----------- EXTRACTION
+Masks created, 6.04 sec.
+Extracted fluorescence from 1856 ROIs in 3505 frames, 8.86 sec.
+----------- Total 15.40 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.33 sec.
+deleting binary files
+Plane 3 processed in 398.52 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 4 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 9.10 sec.
+Registered 1200/3505 in 25.11s
+Registered 2400/3505 in 50.64s
+Registered 3505/3505 in 73.84s
+added enhanced mean image
+----------- Total 96.58 sec
+Registration metrics, 38.29 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1386,406] in 10.06 sec.
+ROIs: 200, cost: 0.5467, time: 21.5000
+ROIs: 400, cost: 0.5408, time: 32.9384
+ROIs: 600, cost: 0.5366, time: 43.6725
+ROIs: 800, cost: 0.5328, time: 55.5565
+ROIs: 1000, cost: 0.5291, time: 67.5950
+ROIs: 1200, cost: 0.5250, time: 80.5116
+ROIs: 1400, cost: 0.5203, time: 94.5763
+ROIs: 1600, cost: 0.5152, time: 109.6035
+ROIs: 1800, cost: 0.5099, time: 125.4462
+ROIs: 2000, cost: 0.5039, time: 142.8362
+ROIs: 2188, cost: 0.4981, time: 160.8655
+ROIs: 2284, cost: 0.4941, time: 178.2354
+ROIs: 2354, cost: 0.4911, time: 195.3453
+ROIs: 2401, cost: 0.4889, time: 213.1491
+ROIs: 2439, cost: 0.4874, time: 230.9094
+ROIs: 2460, cost: 0.4864, time: 248.3603
+ROIs: 2480, cost: 0.4854, time: 265.1437
+ROIs: 2498, cost: 0.4844, time: 282.1228
+ROIs: 2498, cost: 0.5574, time: 297.7280
+ROIs: 2498, cost: 0.5435, time: 315.8061
+ROIs: 2498, cost: 0.5386, time: 330.7498
+C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\detection\sourcery.py:283: RuntimeWarning: Mean of empty slice
+  footprints[k] = np.nanmean(rs[proj > proj.max() * frac])
+Detected 2498 ROIs, 365.85 sec
+After removing overlaps, 2116 ROIs remain
+----------- Total 382.37 sec.
+----------- EXTRACTION
+Masks created, 7.62 sec.
+Extracted fluorescence from 2116 ROIs in 3505 frames, 9.38 sec.
+----------- Total 17.54 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.37 sec.
+deleting binary files
+Plane 4 processed in 537.88 sec (can open in GUI).
+total = 2222.21 sec.
+Creating combined view
+appended plane 0 to combined view
+appended plane 1 to combined view
+appended plane 2 to combined view
+appended plane 3 to combined view
+appended plane 4 to combined view
+TOTAL RUNTIME 2233.21 sec
+Suite2p took 37.22023380994797mins
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-31 08:52:33,139 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+{}
+NOTE: nplanes 1 nrois 5 => ops['nplanes'] = 5
+mesoscan
+** Found 961 tifs - converting to binary **
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py", line 93, in <module>
+    ops1 = run_s2p(ops = ops, db = {})
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 351, in mesoscan_to_binary
+    gc.collect()
+KeyboardInterrupt
+^C
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-31 08:54:41,272 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+{}
+NOTE: nplanes 1 nrois 5 => ops['nplanes'] = 5
+mesoscan
+** Found 961 tifs - converting to binary **
+time 135.14 sec. Wrote 3505 frames per binary for 5 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.34 sec.
+Registered 3505/3505 in 76.77s
+added enhanced mean image
+----------- Total 108.77 sec
+Registration metrics, 39.84 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1382,412] in 10.70 sec.
+ROIs: 200, cost: 0.5399, time: 21.2383
+ROIs: 400, cost: 0.5324, time: 481.3378
+ROIs: 600, cost: 0.5269, time: 491.7749
+ROIs: 800, cost: 0.5221, time: 503.3518
+ROIs: 1000, cost: 0.5179, time: 515.5941
+ROIs: 1200, cost: 0.5140, time: 528.1221
+ROIs: 1400, cost: 0.5103, time: 541.2436
+ROIs: 1600, cost: 0.5068, time: 555.4906
+ROIs: 1800, cost: 0.5035, time: 570.5834
+ROIs: 1825, cost: 0.5029, time: 584.1121
+ROIs: 1830, cost: 0.5028, time: 597.7141
+ROIs: 1830, cost: 0.5457, time: 604.5421
+ROIs: 1830, cost: 0.5393, time: 613.8072
+ROIs: 1830, cost: 0.5377, time: 621.0938
+Detected 1830 ROIs, 640.00 sec
+After removing overlaps, 1805 ROIs remain
+----------- Total 654.77 sec.
+----------- EXTRACTION
+Masks created, 5.19 sec.
+Extracted fluorescence from 1805 ROIs in 3505 frames, 14.24 sec.
+----------- Total 19.90 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.33 sec.
+deleting binary files
+Plane 0 processed in 826.03 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 1 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.10 sec.
+Registered 3505/3505 in 74.67s
+added enhanced mean image
+----------- Total 106.01 sec
+Registration metrics, 38.54 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,412] in 10.30 sec.
+ROIs: 200, cost: 0.5313, time: 22.2092
+ROIs: 400, cost: 0.5258, time: 32.9772
+ROIs: 600, cost: 0.5218, time: 44.2000
+ROIs: 800, cost: 0.5182, time: 55.7405
+ROIs: 1000, cost: 0.5148, time: 68.3976
+ROIs: 1200, cost: 0.5114, time: 81.6807
+ROIs: 1400, cost: 0.5079, time: 95.9751
+ROIs: 1600, cost: 0.5043, time: 110.9515
+ROIs: 1770, cost: 0.5011, time: 126.9400
+ROIs: 1829, cost: 0.4996, time: 141.6226
+ROIs: 1857, cost: 0.4989, time: 155.8375
+ROIs: 1875, cost: 0.4983, time: 169.7775
+ROIs: 1875, cost: 0.5461, time: 177.2568
+ROIs: 1875, cost: 0.5403, time: 188.3321
+ROIs: 1875, cost: 0.5379, time: 198.2750
+Detected 1875 ROIs, 223.35 sec
+After removing overlaps, 1754 ROIs remain
+----------- Total 238.07 sec.
+----------- EXTRACTION
+Masks created, 6.04 sec.
+Extracted fluorescence from 1754 ROIs in 3505 frames, 9.57 sec.
+----------- Total 16.13 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.31 sec.
+deleting binary files
+Plane 1 processed in 401.44 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 2 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.10 sec.
+Registered 3505/3505 in 74.15s
+added enhanced mean image
+----------- Total 105.60 sec
+Registration metrics, 38.89 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,410] in 10.17 sec.
+ROIs: 200, cost: 0.5286, time: 21.8737
+ROIs: 400, cost: 0.5230, time: 32.4743
+ROIs: 600, cost: 0.5188, time: 43.7673
+ROIs: 800, cost: 0.5151, time: 55.3975
+ROIs: 1000, cost: 0.5118, time: 67.9754
+ROIs: 1200, cost: 0.5085, time: 81.5085
+ROIs: 1400, cost: 0.5053, time: 95.7194
+ROIs: 1600, cost: 0.5021, time: 110.9347
+ROIs: 1733, cost: 0.4998, time: 126.0217
+ROIs: 1763, cost: 0.4991, time: 140.2883
+ROIs: 1780, cost: 0.4987, time: 154.0362
+ROIs: 1780, cost: 0.5452, time: 160.8504
+ROIs: 1780, cost: 0.5394, time: 171.0481
+ROIs: 1780, cost: 0.5376, time: 179.6214
+Detected 1780 ROIs, 201.03 sec
+After removing overlaps, 1729 ROIs remain
+----------- Total 215.35 sec.
+----------- EXTRACTION
+Masks created, 5.69 sec.
+Extracted fluorescence from 1729 ROIs in 3505 frames, 9.59 sec.
+----------- Total 15.75 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.30 sec.
+deleting binary files
+Plane 2 processed in 378.25 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 3 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: -1 pixels
+Reference frame, 16.19 sec.
+Registered 3505/3505 in 76.20s
+added enhanced mean image
+----------- Total 108.02 sec
+Registration metrics, 38.81 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1388,406] in 10.09 sec.
+ROIs: 200, cost: 0.5290, time: 21.3797
+ROIs: 400, cost: 0.5236, time: 30.9552
+ROIs: 600, cost: 0.5195, time: 41.7596
+ROIs: 800, cost: 0.5159, time: 53.0072
+ROIs: 1000, cost: 0.5125, time: 64.9201
+ROIs: 1200, cost: 0.5093, time: 78.1571
+ROIs: 1400, cost: 0.5060, time: 91.9342
+ROIs: 1600, cost: 0.5027, time: 107.1387
+ROIs: 1800, cost: 0.4995, time: 122.4093
+ROIs: 1871, cost: 0.4982, time: 136.8141
+ROIs: 1894, cost: 0.4976, time: 150.7450
+ROIs: 1912, cost: 0.4972, time: 165.1756
+ROIs: 1912, cost: 0.5420, time: 172.1016
+ROIs: 1912, cost: 0.5360, time: 182.6465
+ROIs: 1912, cost: 0.5346, time: 190.5046
+Detected 1912 ROIs, 212.04 sec
+After removing overlaps, 1835 ROIs remain
+----------- Total 226.60 sec.
+----------- EXTRACTION
+Masks created, 5.90 sec.
+Extracted fluorescence from 1835 ROIs in 3505 frames, 9.57 sec.
+----------- Total 15.95 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.33 sec.
+deleting binary files
+Plane 3 processed in 392.16 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 4 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.24 sec.
+Registered 3505/3505 in 74.33s
+added enhanced mean image
+----------- Total 106.55 sec
+Registration metrics, 39.56 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1386,406] in 10.25 sec.
+ROIs: 200, cost: 0.5455, time: 22.7513
+ROIs: 400, cost: 0.5397, time: 34.4921
+ROIs: 600, cost: 0.5356, time: 45.5472
+ROIs: 800, cost: 0.5319, time: 57.1678
+ROIs: 1000, cost: 0.5281, time: 69.7346
+ROIs: 1200, cost: 0.5239, time: 84.0054
+ROIs: 1400, cost: 0.5192, time: 98.8028
+ROIs: 1600, cost: 0.5138, time: 114.6279
+ROIs: 1800, cost: 0.5084, time: 131.2325
+ROIs: 2000, cost: 0.5029, time: 149.5812
+ROIs: 2200, cost: 0.4968, time: 169.6982
+ROIs: 2313, cost: 0.4920, time: 190.0104
+ROIs: 2395, cost: 0.4887, time: 208.7951
+ROIs: 2437, cost: 0.4865, time: 227.6176
+ROIs: 2473, cost: 0.4849, time: 247.0814
+ROIs: 2492, cost: 0.4836, time: 265.2598
+ROIs: 2492, cost: 0.5541, time: 281.9185
+ROIs: 2492, cost: 0.5412, time: 302.4412
+ROIs: 2492, cost: 0.5360, time: 317.9207
+C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\detection\sourcery.py:283: RuntimeWarning: Mean of empty slice
+  footprints[k] = np.nanmean(rs[proj > proj.max() * frac])
+Detected 2492 ROIs, 354.87 sec
+After removing overlaps, 2108 ROIs remain
+----------- Total 371.24 sec.
+----------- EXTRACTION
+Masks created, 7.49 sec.
+Extracted fluorescence from 2108 ROIs in 3505 frames, 10.38 sec.
+----------- Total 18.40 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.38 sec.
+deleting binary files
+Plane 4 processed in 538.98 sec (can open in GUI).
+total = 2673.14 sec.
+Creating combined view
+appended plane 0 to combined view
+appended plane 1 to combined view
+appended plane 2 to combined view
+appended plane 3 to combined view
+appended plane 4 to combined view
+TOTAL RUNTIME 2683.88 sec
+Suite2p took 44.731350409984586mins
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>ls
+'ls' is not recognized as an internal or external command,
+operable program or batch file.
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python
+Python 3.8.12 (default, Oct 12 2021, 03:01:40) [MSC v.1916 64 bit (AMD64)] :: Anaconda, Inc. on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> os
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'os' is not defined
+>>> import os
+>>> os.cpu_count()
+20
+>>> import json
+>>> data_path = 'D://HS//HS_CamKIIGC6s_59//210617//RFcircleCI1//'
+>>> os.chdir(data_path)
+>>> with open('ops.json') as f:    opsjson = json.load(f)print(opsjson.keys())
+  File "<stdin>", line 1
+    with open('ops.json') as f:    opsjson = json.load(f)print(opsjson.keys())
+                                                         ^
+SyntaxError: invalid syntax
+>>> with open('ops.json') as f:
+... opsjson = json.load(f)
+  File "<stdin>", line 2
+    opsjson = json.load(f)
+    ^
+IndentationError: expected an indented block
+>>> opsjson = json.load(f)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'f' is not defined
+>>> with open('ops.json') as f:
+... Readline internal error
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\console\console.py", line 768, in hook_wrapper_23
+    res = ensure_str(readline_hook(prompt))
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\rlmain.py", line 571, in readline
+    self._readline_from_keyboard()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\rlmain.py", line 536, in _readline_from_keyboard
+    if self._readline_from_keyboard_poll():
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\rlmain.py", line 556, in _readline_from_keyboard_poll
+    result = self.mode.process_keyevent(event.keyinfo)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\modes\emacs.py", line 243, in process_keyevent
+    r = self.process_keyevent_queue[-1](keyinfo)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\modes\emacs.py", line 286, in _process_keyevent
+    r = dispatch_func(keyinfo)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\modes\basemode.py", line 257, in complete
+    completions = self._get_completions()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\pyreadline\modes\basemode.py", line 200, in _get_completions
+    r = self.completer(ensure_unicode(text), i)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\rlcompleter.py", line 80, in complete
+    readline.redisplay()
+AttributeError: module 'readline' has no attribute 'redisplay'
+  File "<stdin>", line 2
+
+    ^
+IndentationError: expected an indented block
+>>> with open('ops.json') as f:    opsjson = json.load(f)
+...
+>>> print(opsjson.keys())
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+>>>
+>>>     with open('ops' + i + '.json') as f:
+  File "<stdin>", line 1
+    with open('ops' + i + '.json') as f:
+    ^
+IndentationError: unexpected indent
+>>> 'ops' + i + '.json'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'i' is not defined
+>>> i = 0
+>>> 'ops' + i + '.json'
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: can only concatenate str (not "int") to str
+>>> with open('ops' + str(i) + '.json') as f:    opsjson0 = json.load(f)
+...
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'ops0.json'
+>>> with open('ops' + str(i) + '.json') as f:    opsjson0 = json.load(f)
+...
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: 'ops0.json'
+>>> with open('ops_' + str(i) + '.json') as f:    opsjson0 = json.load(f)
+...
+>>> print(opsjson0.keys())
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+>>> print(opsjson0.dx)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'dict' object has no attribute 'dx'
+>>> print(opsjson0['dx'])
+0
+>>> print(opsjson0['dy'])
+0
+>>> print(opsjson['dy'])
+[0, 0, 0, 0, 0]
+>>> print(opsjson['dx'])
+[0, 420, 840, 1260, 1680]
+>>> quit()
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py
+python: can't open file 'C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py': [Errno 2] No such file or directory
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py
+python: can't open file 'C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py': [Errno 2] No such file or directory
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py
+python: can't open file 'C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\parallels2p.py': [Errno 2] No such file or directory
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>cd ..
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\parallels2p.py
+python: can't open file 'C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\parallels2p.py': [Errno 2] No such file or directory
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python parallels2p.py
+2022-01-31 13:54:14,866 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 13:54:15,176 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+creating new log file
+2022-01-31 13:54:24,737 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+creating new log file
+2022-01-31 13:54:24,737 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+creating new log file
+2022-01-31 13:54:24,757 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 13:54:24,778 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+2022-01-31 13:54:24,783 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secsAll saved,took  0.0secs
+
+Suite2p took 0.00010095040003458659minsSuite2p took 0.00014153321584065755mins
+
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//'}{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//'}
+
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+Process Process-2:
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 315, in _bootstrap
+    self.run()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 260, in mesoscan_to_binary
+    dy = ops['dy'].copy()
+AttributeError: 'int' object has no attribute 'copy'
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+Process Process-1:
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 315, in _bootstrap
+    self.run()
+2022-01-31 13:54:24,798 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+All saved,took  0.0secs  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 260, in mesoscan_to_binary
+    dy = ops['dy'].copy()
+Suite2p took 0.0minsAttributeError: 'int' object has no attribute 'copy'
+
+creating new log file{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//'}
+
+2022-01-31 13:54:24,798 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+Process Process-3:
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 315, in _bootstrap
+    self.run()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 260, in mesoscan_to_binary
+    dy = ops['dy'].copy()
+AttributeError: 'int' object has no attribute 'copy'
+creating new log file
+2022-01-31 13:54:24,819 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 13:54:24,839 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+Process Process-4:
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 315, in _bootstrap
+    self.run()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 260, in mesoscan_to_binary
+    dy = ops['dy'].copy()
+AttributeError: 'int' object has no attribute 'copy'
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 13:54:24,848 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+Process Process-5:
+Traceback (most recent call last):
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 315, in _bootstrap
+    self.run()
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\multiprocessing\process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\run_s2p.py", line 409, in run_s2p
+    ops0 = convert_funs[ops['input_format']](ops.copy())
+  File "C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\io\tiff.py", line 260, in mesoscan_to_binary
+    dy = ops['dy'].copy()
+AttributeError: 'int' object has no attribute 'copy'
+All saved,took  10.301579236984253secs
+Suite2p took 0.17619247436523439mins
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+2022-01-31 14:06:02,113 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+dict_keys(['fs', 'nplanes', 'nrois', 'mesoscan', 'diameter', 'num_workers_roi', 'keep_movie_raw', 'delete_bin', 'batch_size', 'nimg_init', 'tau', 'combined', 'nonrigid', 'dx', 'dy', 'lines', 'data_path', 'save_path0'])
+{}
+NOTE: nplanes 1 nrois 5 => ops['nplanes'] = 5
+mesoscan
+** Found 961 tifs - converting to binary **
+time 149.05 sec. Wrote 3505 frames per binary for 5 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.25 sec.
+Registered 3505/3505 in 73.73s
+added enhanced mean image
+----------- Total 105.36 sec
+Registration metrics, 39.66 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1382,412] in 10.16 sec.
+ROIs: 200, cost: 0.5399, time: 21.4062
+ROIs: 400, cost: 0.5324, time: 30.8228
+ROIs: 600, cost: 0.5269, time: 41.2926
+ROIs: 800, cost: 0.5221, time: 52.5175
+ROIs: 1000, cost: 0.5179, time: 64.6952
+ROIs: 1200, cost: 0.5140, time: 77.5186
+ROIs: 1400, cost: 0.5103, time: 90.9334
+ROIs: 1600, cost: 0.5068, time: 105.8124
+ROIs: 1800, cost: 0.5035, time: 120.4162
+ROIs: 1825, cost: 0.5029, time: 134.1680
+ROIs: 1830, cost: 0.5028, time: 147.1301
+ROIs: 1830, cost: 0.5457, time: 154.1292
+ROIs: 1830, cost: 0.5393, time: 163.4000
+ROIs: 1830, cost: 0.5377, time: 170.7947
+Detected 1830 ROIs, 190.11 sec
+After removing overlaps, 1805 ROIs remain
+----------- Total 204.43 sec.
+----------- EXTRACTION
+Masks created, 5.17 sec.
+Extracted fluorescence from 1805 ROIs in 3505 frames, 14.10 sec.
+----------- Total 19.78 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.32 sec.
+deleting binary files
+Plane 0 processed in 372.01 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 1 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.12 sec.
+Registered 3505/3505 in 73.65s
+added enhanced mean image
+----------- Total 104.97 sec
+Registration metrics, 38.68 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,412] in 10.18 sec.
+ROIs: 200, cost: 0.5313, time: 22.7307
+ROIs: 400, cost: 0.5258, time: 33.5311
+ROIs: 600, cost: 0.5218, time: 45.0304
+ROIs: 800, cost: 0.5182, time: 56.5455
+ROIs: 1000, cost: 0.5148, time: 69.5093
+ROIs: 1200, cost: 0.5114, time: 83.0167
+ROIs: 1400, cost: 0.5079, time: 97.6630
+ROIs: 1600, cost: 0.5043, time: 112.9684
+ROIs: 1770, cost: 0.5011, time: 129.0513
+ROIs: 1829, cost: 0.4996, time: 144.3378
+ROIs: 1857, cost: 0.4989, time: 158.6840
+ROIs: 1875, cost: 0.4983, time: 173.2496
+ROIs: 1875, cost: 0.5461, time: 180.6745
+ROIs: 1875, cost: 0.5403, time: 191.8179
+ROIs: 1875, cost: 0.5379, time: 201.8974
+Detected 1875 ROIs, 226.05 sec
+After removing overlaps, 1754 ROIs remain
+----------- Total 240.74 sec.
+----------- EXTRACTION
+Masks created, 6.04 sec.
+Extracted fluorescence from 1754 ROIs in 3505 frames, 9.62 sec.
+----------- Total 16.15 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.32 sec.
+deleting binary files
+Plane 1 processed in 403.21 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 2 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.07 sec.
+Registered 3505/3505 in 73.69s
+added enhanced mean image
+----------- Total 105.17 sec
+Registration metrics, 39.50 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,410] in 11.34 sec.
+ROIs: 200, cost: 0.5286, time: 24.5586
+ROIs: 400, cost: 0.5230, time: 35.2032
+ROIs: 600, cost: 0.5188, time: 46.7184
+ROIs: 800, cost: 0.5151, time: 59.8557
+ROIs: 1000, cost: 0.5118, time: 72.5241
+ROIs: 1200, cost: 0.5085, time: 85.9671
+ROIs: 1400, cost: 0.5053, time: 100.3800
+ROIs: 1600, cost: 0.5021, time: 115.8163
+ROIs: 1733, cost: 0.4998, time: 130.9119
+ROIs: 1763, cost: 0.4991, time: 145.3185
+ROIs: 1780, cost: 0.4987, time: 159.3928
+ROIs: 1780, cost: 0.5452, time: 166.4328
+ROIs: 1780, cost: 0.5394, time: 176.7585
+ROIs: 1780, cost: 0.5376, time: 185.0910
+Detected 1780 ROIs, 206.46 sec
+After removing overlaps, 1729 ROIs remain
+----------- Total 222.02 sec.
+----------- EXTRACTION
+Masks created, 5.72 sec.
+Extracted fluorescence from 1729 ROIs in 3505 frames, 9.56 sec.
+----------- Total 15.75 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.31 sec.
+deleting binary files
+Plane 2 processed in 385.04 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 3 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: -1 pixels
+Reference frame, 16.26 sec.
+Registered 3505/3505 in 76.40s
+added enhanced mean image
+----------- Total 108.35 sec
+Registration metrics, 38.43 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1388,406] in 10.23 sec.
+ROIs: 200, cost: 0.5290, time: 21.8562
+ROIs: 400, cost: 0.5236, time: 31.6291
+ROIs: 600, cost: 0.5195, time: 42.4351
+ROIs: 800, cost: 0.5159, time: 53.5234
+ROIs: 1000, cost: 0.5125, time: 65.7887
+ROIs: 1200, cost: 0.5093, time: 78.9039
+ROIs: 1400, cost: 0.5060, time: 92.4333
+ROIs: 1600, cost: 0.5027, time: 107.6211
+ROIs: 1800, cost: 0.4995, time: 122.9252
+ROIs: 1871, cost: 0.4982, time: 137.5840
+ROIs: 1894, cost: 0.4976, time: 152.1352
+ROIs: 1912, cost: 0.4972, time: 166.1715
+ROIs: 1912, cost: 0.5420, time: 173.0496
+ROIs: 1912, cost: 0.5360, time: 183.8236
+ROIs: 1912, cost: 0.5346, time: 192.0196
+Detected 1912 ROIs, 214.23 sec
+After removing overlaps, 1835 ROIs remain
+----------- Total 228.99 sec.
+----------- EXTRACTION
+Masks created, 5.89 sec.
+Extracted fluorescence from 1835 ROIs in 3505 frames, 9.65 sec.
+----------- Total 16.04 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.02 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.32 sec.
+deleting binary files
+Plane 3 processed in 394.61 sec (can open in GUI).
+>>>>>>>>>>>>>>>>>>>>> PLANE 4 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 16.26 sec.
+Registered 3505/3505 in 73.26s
+added enhanced mean image
+----------- Total 105.49 sec
+Registration metrics, 39.38 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1386,406] in 11.53 sec.
+ROIs: 200, cost: 0.5455, time: 25.2289
+ROIs: 400, cost: 0.5397, time: 36.9893
+ROIs: 600, cost: 0.5356, time: 48.3211
+ROIs: 800, cost: 0.5319, time: 60.8368
+ROIs: 1000, cost: 0.5281, time: 74.3907
+ROIs: 1200, cost: 0.5239, time: 88.7622
+ROIs: 1400, cost: 0.5192, time: 104.1739
+ROIs: 1600, cost: 0.5138, time: 120.9700
+ROIs: 1800, cost: 0.5084, time: 139.4755
+ROIs: 2000, cost: 0.5029, time: 158.6772
+ROIs: 2200, cost: 0.4968, time: 179.0760
+ROIs: 2313, cost: 0.4920, time: 199.1440
+ROIs: 2395, cost: 0.4887, time: 219.0223
+ROIs: 2437, cost: 0.4865, time: 238.3581
+ROIs: 2473, cost: 0.4849, time: 256.8251
+ROIs: 2492, cost: 0.4836, time: 274.3906
+ROIs: 2492, cost: 0.5541, time: 290.2056
+ROIs: 2492, cost: 0.5412, time: 310.0743
+ROIs: 2492, cost: 0.5360, time: 325.4660
+C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\detection\sourcery.py:283: RuntimeWarning: Mean of empty slice
+  footprints[k] = np.nanmean(rs[proj > proj.max() * frac])
+Detected 2492 ROIs, 360.88 sec
+After removing overlaps, 2108 ROIs remain
+----------- Total 378.66 sec.
+----------- EXTRACTION
+Masks created, 7.58 sec.
+Extracted fluorescence from 2108 ROIs in 3505 frames, 10.34 sec.
+----------- Total 18.46 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.37 sec.
+deleting binary files
+Plane 4 processed in 545.18 sec (can open in GUI).
+total = 2250.19 sec.
+Creating combined view
+appended plane 0 to combined view
+appended plane 1 to combined view
+appended plane 2 to combined view
+appended plane 3 to combined view
+appended plane 4 to combined view
+TOTAL RUNTIME 2261.03 sec
+Suite2p took 37.68375566403071mins
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python parallels2p.py
+  File "parallels2p.py", line 115
+    'fast_disk': outdir[i]}
+    ^
+SyntaxError: invalid syntax
+
+(suite2p) C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline>python parallels2p.py
+2022-01-31 14:45:15,440 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 14:45:15,752 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+creating new log file
+2022-01-31 14:45:25,334 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+creating new log file
+2022-01-31 14:45:25,334 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+creating new log file
+2022-01-31 14:45:25,364 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 14:45:25,364 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'fast_disk': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+mesoscan
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 14:45:25,374 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'fast_disk': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+creating new log file
+2022-01-31 14:45:25,383 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+mesoscan
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+** Found 961 tifs - converting to binary **2022-01-31 14:45:25,399 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'fast_disk': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+mesoscan
+** Found 961 tifs - converting to binary **
+creating new log file
+2022-01-31 14:45:25,409 [INFO] WRITING LOG OUTPUT TO C:\Users\MesoDAQ\.cellpose\run.log
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 14:45:25,419 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.00016657908757527668mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'fast_disk': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+mesoscan
+** Found 961 tifs - converting to binary **
+** Found 961 tifs - converting to binary **
+['D://HS//HS_CamKIIGC6s_59//210617//Online//plane_0//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_1//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_2//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_3//', 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//']
+2022-01-31 14:45:25,469 [INFO] Starting suite2p parallel processing in a different CPU core for each plane
+All saved,took  0.0secs
+Suite2p took 0.0mins
+{'save_path0': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//', 'fast_disk': 'D://HS//HS_CamKIIGC6s_59//210617//Online//plane_4//'}
+NOTE: nplanes 1 nrois 1 => ops['nplanes'] = 1
+mesoscan
+** Found 961 tifs - converting to binary **
+2000 frames of binary, time 75.93 sec.
+2000 frames of binary, time 75.98 sec.
+2000 frames of binary, time 76.14 sec.
+2000 frames of binary, time 76.17 sec.
+2000 frames of binary, time 76.09 sec.
+time 132.00 sec. Wrote 3505 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+time 132.25 sec. Wrote 3505 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+time 132.47 sec. Wrote 3505 frames per binary for 1 planes
+time 132.56 sec. Wrote 3505 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+time 132.60 sec. Wrote 3505 frames per binary for 1 planes
+>>>>>>>>>>>>>>>>>>>>> PLANE 0 <<<<<<<<<<<<<<<<<<<<<<
+NOTE: not registered / registration forced with ops['do_registration']>1
+      (no previous offsets to delete)
+----------- REGISTRATION
+registering 3505 frames
+NOTE: estimated bidiphase offset from data: 0 pixels
+NOTE: estimated bidiphase offset from data: -1 pixels
+NOTE: estimated bidiphase offset from data: 0 pixels
+NOTE: estimated bidiphase offset from data: 0 pixels
+NOTE: estimated bidiphase offset from data: 0 pixels
+Reference frame, 45.70 sec.
+Reference frame, 45.69 sec.
+Reference frame, 47.05 sec.
+Reference frame, 47.68 sec.
+Reference frame, 49.26 sec.
+Registered 2000/3505 in 75.37s
+Registered 2000/3505 in 76.64s
+Registered 2000/3505 in 81.41s
+Registered 2000/3505 in 84.59s
+Registered 2000/3505 in 86.70s
+Registered 3505/3505 in 134.02s
+Registered 3505/3505 in 133.42s
+Registered 3505/3505 in 140.54s
+Registered 3505/3505 in 140.48s
+Registered 3505/3505 in 141.91s
+added enhanced mean image
+----------- Total 198.52 sec
+added enhanced mean image
+----------- Total 199.94 sec
+added enhanced mean image
+----------- Total 203.76 sec
+added enhanced mean image
+----------- Total 204.75 sec
+added enhanced mean image
+----------- Total 207.59 sec
+Registration metrics, 53.40 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Registration metrics, 54.66 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Registration metrics, 57.38 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Registration metrics, 58.33 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Registration metrics, 57.63 sec.
+NOTE: applying default C:\Users\MesoDAQ\.suite2p\classifiers\classifier_user.npy
+----------- ROI DETECTION
+Binning movie in chunks of length 05
+Binned movie [700,1384,410] in 15.03 sec.
+Binned movie [700,1386,406] in 14.77 sec.
+Binned movie [700,1388,406] in 13.57 sec.
+Binned movie [700,1382,412] in 12.69 sec.
+Binned movie [700,1384,412] in 12.87 sec.
+ROIs: 200, cost: 0.5295, time: 31.5379
+ROIs: 200, cost: 0.5464, time: 30.2903
+ROIs: 200, cost: 0.5298, time: 31.1593
+ROIs: 200, cost: 0.5408, time: 30.8302
+ROIs: 200, cost: 0.5323, time: 31.9776
+ROIs: 400, cost: 0.5239, time: 47.5331
+ROIs: 400, cost: 0.5407, time: 47.1624
+ROIs: 400, cost: 0.5244, time: 46.2559
+ROIs: 400, cost: 0.5332, time: 45.5143
+ROIs: 400, cost: 0.5267, time: 48.3650
+ROIs: 600, cost: 0.5197, time: 64.4332
+ROIs: 600, cost: 0.5365, time: 63.7592
+ROIs: 600, cost: 0.5203, time: 62.8464
+ROIs: 600, cost: 0.5278, time: 61.8344
+ROIs: 600, cost: 0.5227, time: 65.6432
+ROIs: 800, cost: 0.5160, time: 84.2569
+ROIs: 800, cost: 0.5328, time: 83.7924
+ROIs: 800, cost: 0.5167, time: 81.2175
+ROIs: 800, cost: 0.5230, time: 80.5961
+ROIs: 800, cost: 0.5191, time: 84.2522
+ROIs: 1000, cost: 0.5127, time: 104.6865
+ROIs: 1000, cost: 0.5290, time: 104.5953
+ROIs: 1000, cost: 0.5133, time: 101.8756
+ROIs: 1000, cost: 0.5188, time: 100.9542
+ROIs: 1000, cost: 0.5158, time: 105.0545
+ROIs: 1200, cost: 0.5093, time: 129.9957
+ROIs: 1200, cost: 0.5248, time: 127.6805
+ROIs: 1200, cost: 0.5101, time: 125.2150
+ROIs: 1200, cost: 0.5149, time: 124.0444
+ROIs: 1200, cost: 0.5123, time: 128.0834
+ROIs: 1400, cost: 0.5201, time: 152.3812
+ROIs: 1400, cost: 0.5061, time: 156.5270
+ROIs: 1400, cost: 0.5112, time: 147.7598
+ROIs: 1400, cost: 0.5068, time: 149.7285
+ROIs: 1400, cost: 0.5088, time: 153.1570
+ROIs: 1600, cost: 0.5077, time: 172.7560
+ROIs: 1600, cost: 0.5148, time: 180.0060
+ROIs: 1600, cost: 0.5036, time: 175.5544
+ROIs: 1600, cost: 0.5029, time: 184.0484
+ROIs: 1600, cost: 0.5052, time: 180.1677
+ROIs: 1800, cost: 0.5043, time: 203.3117
+ROIs: 1739, cost: 0.5005, time: 218.0366
+ROIs: 1800, cost: 0.5003, time: 210.3906
+ROIs: 1800, cost: 0.5089, time: 215.9299
+ROIs: 1762, cost: 0.5022, time: 211.0588
+ROIs: 1824, cost: 0.5038, time: 235.1931
+ROIs: 1771, cost: 0.4998, time: 244.8892
+ROIs: 1873, cost: 0.4989, time: 240.1259
+ROIs: 1817, cost: 0.5008, time: 239.0887
+ROIs: 2000, cost: 0.5031, time: 249.7350
+ROIs: 1826, cost: 0.5037, time: 261.5411
+ROIs: 1789, cost: 0.4993, time: 271.6371
+ROIs: 1903, cost: 0.4982, time: 264.6294
+ROIs: 1843, cost: 0.5001, time: 266.3794
+ROIs: 1826, cost: 0.5464, time: 274.0117
+ROIs: 1789, cost: 0.5460, time: 283.5580
+ROIs: 2200, cost: 0.4972, time: 286.1025
+ROIs: 1923, cost: 0.4977, time: 291.7437
+ROIs: 1826, cost: 0.5399, time: 291.7759
+ROIs: 1864, cost: 0.4995, time: 291.5581
+ROIs: 1789, cost: 0.5402, time: 303.5378
+ROIs: 1826, cost: 0.5385, time: 304.7118
+ROIs: 1789, cost: 0.5385, time: 320.1213
+ROIs: 1942, cost: 0.4973, time: 318.1452
+ROIs: 2314, cost: 0.4929, time: 323.3165
+ROIs: 1880, cost: 0.4991, time: 316.5476
+ROIs: 1942, cost: 0.5432, time: 329.4543
+ROIs: 1880, cost: 0.5473, time: 327.2773
+Detected 1826 ROIs, 346.08 sec
+ROIs: 2390, cost: 0.4898, time: 354.2176
+ROIs: 1942, cost: 0.5371, time: 349.6155
+ROIs: 1880, cost: 0.5413, time: 350.4305
+Detected 1789 ROIs, 363.01 sec
+After removing overlaps, 1798 ROIs remain
+----------- Total 366.50 sec.
+----------- EXTRACTION
+After removing overlaps, 1737 ROIs remain
+----------- Total 385.06 sec.
+----------- EXTRACTION
+Masks created, 8.63 sec.
+ROIs: 1942, cost: 0.5356, time: 365.9677
+Masks created, 9.97 sec.
+ROIs: 1880, cost: 0.5389, time: 369.7394
+ROIs: 2439, cost: 0.4876, time: 379.9562
+Extracted fluorescence from 1798 ROIs in 3505 frames, 21.73 sec.
+----------- Total 31.04 sec.
+----------- CLASSIFICATION
+['npix_norm', 'skew', 'compact']
+----------- Total 0.11 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.47 sec.
+Extracted fluorescence from 1737 ROIs in 3505 frames, 21.17 sec.
+deleting binary files
+----------- Total 31.76 sec.
+----------- CLASSIFICATION
+['skew', 'npix_norm', 'compact']
+----------- Total 0.06 sec.
+----------- SPIKE DECONVOLUTION
+Plane 0 processed in 668.26 sec (can open in GUI).
+total = 801.19 sec.
+TOTAL RUNTIME 801.20 sec
+----------- Total 0.83 sec.
+deleting binary files
+Plane 0 processed in 673.57 sec (can open in GUI).
+total = 805.85 sec.
+TOTAL RUNTIME 805.85 sec
+ROIs: 2479, cost: 0.4859, time: 407.3925
+Detected 1942 ROIs, 410.05 sec
+After removing overlaps, 1857 ROIs remain
+----------- Total 430.60 sec.
+----------- EXTRACTION
+Detected 1880 ROIs, 414.82 sec
+After removing overlaps, 1757 ROIs remain
+----------- Total 433.07 sec.
+----------- EXTRACTION
+ROIs: 2504, cost: 0.4845, time: 429.6980
+Masks created, 7.88 sec.
+Masks created, 6.44 sec.
+Extracted fluorescence from 1857 ROIs in 3505 frames, 16.62 sec.
+----------- Total 25.33 sec.
+----------- CLASSIFICATION
+['compact', 'npix_norm', 'skew']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.50 sec.
+deleting binary files
+Plane 0 processed in 721.22 sec (can open in GUI).
+total = 853.67 sec.
+TOTAL RUNTIME 853.67 sec
+ROIs: 2526, cost: 0.4835, time: 452.9420
+Extracted fluorescence from 1757 ROIs in 3505 frames, 19.94 sec.
+----------- Total 26.76 sec.
+----------- CLASSIFICATION
+['npix_norm', 'compact', 'skew']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.33 sec.
+deleting binary files
+Plane 0 processed in 727.78 sec (can open in GUI).
+total = 860.53 sec.
+TOTAL RUNTIME 860.53 sec
+ROIs: 2542, cost: 0.4827, time: 470.6324
+ROIs: 2542, cost: 0.5583, time: 487.0381
+ROIs: 2542, cost: 0.5440, time: 508.8205
+ROIs: 2542, cost: 0.5375, time: 523.8015
+C:\Users\MesoDAQ\anaconda3\envs\suite2p\lib\site-packages\suite2p\detection\sourcery.py:283: RuntimeWarning: Mean of empty slice
+  footprints[k] = np.nanmean(rs[proj > proj.max() * frac])
+Detected 2542 ROIs, 560.32 sec
+After removing overlaps, 2140 ROIs remain
+----------- Total 581.39 sec.
+----------- EXTRACTION
+Masks created, 7.56 sec.
+Extracted fluorescence from 2140 ROIs in 3505 frames, 14.61 sec.
+----------- Total 22.69 sec.
+----------- CLASSIFICATION
+['skew', 'compact', 'npix_norm']
+----------- Total 0.03 sec.
+----------- SPIKE DECONVOLUTION
+----------- Total 0.38 sec.
+deleting binary files
+Plane 0 processed in 861.97 sec (can open in GUI).
+total = 994.66 sec.
+TOTAL RUNTIME 994.66 sec
+All saved,took  1004.9956932067871secs
+Suite2p took 16.7544668674469mins
+
