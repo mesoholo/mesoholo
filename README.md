@@ -27,6 +27,16 @@ The main location helpers are:
 
 Large parts of `matlab/rig/` expect specific hardware/software stacks (e.g. ScanImage, NI-DAQ, Meadowlark SLM SDK, Psychtoolbox, and an `msocket` MATLAB implementation). This repo aims to preserve the original logic while making paths/config explicit; you may still need to install vendor SDKs and add third-party code to your MATLAB path.
 
+### Contributors (historical + recent)
+
+This codebase evolved over many years across multiple computers and users. Recent substantial edits for the 2020s-era mesoscope holography pipeline include contributions from:
+
+- Uday Jagadisan (`kj.udayakiran@gmail.com`)
+- Lamiae Abdeladim (`lamiae.abdeladim@gmail.com`)
+- Hyeyoung Shin (`shinehyeyoung@gmail.com`)
+
+For more detail, see `docs/CONTRIBUTORS.md`.
+
 ### Contributing / cleaning
 
 If you add new scripts, please put them into `dump/` first; they will be reorganized into the appropriate module directory and cleaned/documented before being published.
