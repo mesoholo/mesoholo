@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/updateSIrois_meso.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % xyintegration = updateSIrois_meso(hSI,holoRequest,clearprev, nstrips_orig, fullnpix_orig, fullxsize_orig, fullysize_orig, fullxcenter_orig, fullycenter_orig);
 function xynew = updateSIrois_meso(hSI,holoRequest,clearprev, fullnpix_orig, fullxsize_orig, fullysize_orig, fullxcenter_orig, fullycenter_orig)
 centerXY = holoRequest.targets(:,1:2);

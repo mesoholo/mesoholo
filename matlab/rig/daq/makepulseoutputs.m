@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/daq/makepulseoutputs.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [output] = makepulseoutputs(start_time, pulsenumber, pulseduration, pulseamp ,pulsefrequency, Fs, sweepduration, pulseampDelta, pulseDurationDelta)
 % Generates the analog output waveform for the LED or other analog device
 

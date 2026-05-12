@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/MakeHBHolorequest.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [ holoRequest ] = MakeHBHolorequest(row,col,xoffset,yoffset,a,tilteagle,power,ao0,ao1,hSI)
 %UNTITLED4 Summary of this function goes here
 %   Initial 00 calibrated FOV coordinates hardcoded

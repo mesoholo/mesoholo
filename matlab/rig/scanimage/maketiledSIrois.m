@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/maketiledSIrois.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [xynew] = maketiledSIrois( allinfo,newnumNonNanElements,hSI)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here

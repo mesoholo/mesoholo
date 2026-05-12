@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/visual_stim/gen_gratings_uday.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % function [tex,trigonframe] = gen_gratings(wininfo,gratingInfo,thisstim)
 function thisstim = gen_gratings_uday(wininfo,gratingInfo,thisstim,aperture)
 %gen_gratings_uday  Generate drifting grating textures for a single trial.

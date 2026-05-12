@@ -1,4 +1,11 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/daq/gridPowerCalib.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 clear all
+addpath(fileparts(fileparts(mfilename('fullpath')))); % .../matlab (for mesoholo_repo_root)
 % Put a hologram on the SLM in Holo computer. Setup internal power to a
 % fixed value. 
 holo = [0.55,0.55,0,1];
@@ -10,7 +17,10 @@ if(sendgalvo)
 end
 %---------------------------------------------------------
 
-livepowerpath = ['C:\Users\MesoHolo\Desktop\livepower\livepower.csv'];
+livepowerpath = getenv('MESOHOLO_LIVEPOWER_CSV');
+if isempty(livepowerpath)
+    livepowerpath = fullfile(mesoholo_repo_root(), 'data', 'fixtures', 'livepower', 'livepower.csv');
+end
 powerwaittime = 8;
 waitdisptime = 2;
 voltages0 = linspace(-2,2,9);

@@ -1,8 +1,11 @@
+%MESOHOLO-DOC
+% Repository: mesoholo (Abdeladim et al., 2026). File: python/suite2p_pipeline/parallelmeso_json_from_si_210617_59.m
+% Purpose: Build suite2p JSON from ScanImage TIFFs for a fixed session layout under ``data/sessions``.
+%
 % this script errors in Matlab R2016b. Run in later versions
-% addpath(genpath('C:\Users\Hyeyoung\Documents\MATLAB'))
 
-% set to folder with tiffs
-root = 'D:\HS\HS_CamKIIGC6s_59\210617\RFcircleCI1\';
+% set to folder with tiffs (repository-local)
+root = fullfile(mesoholo_repo_from_script(), 'data', 'sessions', 'HS_CamKIIGC6s_59', '210617', 'RFcircleCI1');
 fs = dir(fullfile(root, '*.tif'));
 fname = fullfile(fs(1).folder, fs(1).name);
 
@@ -114,13 +117,17 @@ end
 data.data_path{1} = fpath;
 disp(fpath)
 
-% save path is on different drive (G:)
-fpath = 'D:';
-for j = 2:numel(s)
-    fpath = [fpath '/' s{j}];
+fastRoot = getenv('MESOHOLO_SUITE2P_FAST_DISK');
+if isempty(fastRoot)
+    data.save_path0 = fpath;
+else
+    fpathSave = fastRoot;
+    for j = 2:numel(s)
+        fpathSave = [fpathSave '/' s{j}];
+    end
+    data.save_path0 = fpathSave;
 end
-data.save_path0 = fpath;
-disp(fpath)
+disp(data.save_path0)
 
 d = jsonencode(data);
 disp(fullfile(root, 'ops.json'))
@@ -213,13 +220,17 @@ end
 data.data_path{1} = fpath;
 % disp(fpath)
 
-% save path is on different drive (G:)
-fpath = 'D:';
-for j = 2:numel(s)
-    fpath = [fpath '/' s{j}];
+fastRoot = getenv('MESOHOLO_SUITE2P_FAST_DISK');
+if isempty(fastRoot)
+    data.save_path0 = fpath;
+else
+    fpathSave = fastRoot;
+    for j = 2:numel(s)
+        fpathSave = [fpathSave '/' s{j}];
+    end
+    data.save_path0 = fpathSave;
 end
-data.save_path0 = fpath;
-% disp(fpath)
+% disp(data.save_path0)
 
 d = jsonencode(data);
 opsfn = [root 'ops_', num2str(iroi-1), '.json'];

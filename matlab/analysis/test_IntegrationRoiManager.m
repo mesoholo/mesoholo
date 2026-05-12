@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/test_IntegrationRoiManager.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % http://scanimage.vidriotechnologies.com/display/SI2019/IntegrationField+API
 %% Definition of an IntegrationField
 hSf = scanimage.mroi.scanfield.fields.IntegrationField();  % create an Integration Scanfield

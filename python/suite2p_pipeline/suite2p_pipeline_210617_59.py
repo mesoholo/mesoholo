@@ -1,13 +1,21 @@
+"""Suite2p runner example for mesoholo (Abdeladim et al., 2026).
+
+Paths default to repository-local ``data/sessions/...``. Copy your TIFF session
+there or set ``MESOHOLO_DATA_ROOT`` in ``_mesoholo_paths.py`` / environment.
+"""
 import os
 import suite2p
 from suite2p.run_s2p import run_s2p
 import json
 import time
 
+from _mesoholo_paths import DATA_DIR
+
 tic1 = time.time()
 
-data_path = 'D://HS//HS_CamKIIGC6s_59//210617//RFcircleCI1//'
-fast_disk = 'D://HS//HS_CamKIIGC6s_59//210617//Online//'
+# Repository-local example layout (create these folders or point to your data)
+data_path = str(DATA_DIR / "sessions" / "HS_CamKIIGC6s_59" / "210617" / "RFcircleCI1")
+fast_disk = str(DATA_DIR / "sessions" / "HS_CamKIIGC6s_59" / "210617" / "Online")
 
 
 # sys.path.append("")

@@ -2,7 +2,8 @@
 dump/
 
 ## Data + outputs (recommended outside git)
-data/
+data/**
+!data/README.md
 outputs/
 **/output/
 **/outputs/

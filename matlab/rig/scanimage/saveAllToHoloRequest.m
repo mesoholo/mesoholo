@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/saveAllToHoloRequest.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [holoRequest] = saveAllToHoloRequest(xynew, yoffset, xoffset , xrotate, yrotate, zMap, hSI,zplane);
 %% Write Custom HoloRequest
 

@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/extractROIs3_uday.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [SourceCell,Data]=extractROIs3_uday(img,skimg,Opts)
 sources=[];
 

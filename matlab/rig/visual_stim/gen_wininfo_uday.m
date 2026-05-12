@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/visual_stim/gen_wininfo_uday.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function wininfo = gen_wininfo_uday(result)
 %gen_wininfo_uday  Initialize Psychtoolbox window and geometry conversions.
 %
@@ -50,7 +56,14 @@ end
 %% Optional: gamma correction lookup (rig-specific)
 try
 if result.GammaCorrect
-    scaledluxvals = load('C:\Users\scanimage\Documents\MATLAB\FrankenRigVisCode\GitHub\FrankenVisCode\Conor\scaledluxvalues20260325.mat');
+    if isempty(which('mesoholo_repo_root'))
+        addpath(fileparts(fileparts(fileparts(mfilename('fullpath')))));
+    end
+    gammaMat = getenv('MESOHOLO_GAMMA_LUT');
+    if isempty(gammaMat)
+        gammaMat = fullfile(mesoholo_repo_root(), 'data', 'fixtures', 'gamma', 'scaledluxvalues20260325.mat');
+    end
+    scaledluxvals = load(gammaMat);
     [~,Bcol] = min(abs(scaledluxvals.scaledluxvals - (Bcol/255)));
 end
 catch

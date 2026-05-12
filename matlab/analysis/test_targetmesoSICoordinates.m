@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo â€” mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/test_targetmesoSICoordinates.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 if clearprev
     hSI.hIntegrationRoiManager.roiGroup.clear()
 end
@@ -19,7 +25,12 @@ end
 %     zs(zs==realZsTargets(i)) =OptoTuneDepthsToProbe(i);
 % end
 
-load('D:\HS\HS_CamKIIGC6s_59\210617\Online\testtargets.mat')
+addpath(fileparts(fileparts(mfilename('fullpath')))); % .../matlab
+ttPath = getenv('MESOHOLO_TESTTARGETS_MAT');
+if isempty(ttPath)
+    ttPath = fullfile(mesoholo_repo_root(), 'data', 'sessions', 'HS_CamKIIGC6s_59', '210617', 'Online', 'testtargets.mat');
+end
+load(ttPath)
 
 %% send targets to ScanImage
 tic
@@ -49,9 +60,9 @@ figure(51);imshow(max(sources,[],3))
 
 % hSI.hRoiManager.currentRoiGroup
 %   RoiGroup with properties:
-%            rois: [1×5 scanimage.mroi.Roi]
-%      activeRois: [1×5 scanimage.mroi.Roi]
-%     displayRois: [1×5 scanimage.mroi.Roi]
+%            rois: [1ï¿½5 scanimage.mroi.Roi]
+%      activeRois: [1ï¿½5 scanimage.mroi.Roi]
+%     displayRois: [1ï¿½5 scanimage.mroi.Roi]
 %              zs: 40
 %            name: 'MROI Imaging ROI Group'
 number = 0;

@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/addmesoSIrois.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % written by Hyeyoung Shin 2/3/2022
 % takes in coordinates from the output of mesotifread function, then adds
 % integration ROIs to the ScanImage "ROI Group Editor" window

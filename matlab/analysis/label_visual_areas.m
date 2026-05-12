@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/label_visual_areas.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % sinvf is calculated in analyze_visfieldsign
 % isequal(size(ROIcorrImage), size(sinvf))
 

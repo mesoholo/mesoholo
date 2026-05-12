@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/countdisplayHoloFOVs.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [XYnewtosave,indexestosave,concatenatedXYum] = countdisplayHoloFOVs(hSI)
 %countdisplayHoloFOVs takes in current SI FOV (WARNING: needs to be sent at
 %1x1um/pixel same as calibration of actual holo central fov), and sends coordinates of centers of masses and IDs of all holoFOVs within the imaging FOVs.  

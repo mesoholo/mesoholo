@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/loadSItif.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % generate a avg image from a raw SI tif file
 % check that this matches with the suite2p meanimg, i.e., that it is not flipped in any dimension
 
@@ -10,9 +16,16 @@
 % 5. Right-click (or control-click if you are on a Mac) anywhere on the figure, and select the 'Export Cursor Data to Workspace...' option from the context menu.
 % 6. Accept the default variable name, "cursor_info", and click "OK".
 % 7. Type "cursor_info.Position" at the MATLAB command prompt and hit "Enter".
-addpath 'C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline'
 
-tiffn = 'S:\Hyeyoung\SI\HS\MU23_1\220728copy\RFtracking\file_03331.tif';
+% Paths: `mesoholo_setup` adds `python/suite2p_pipeline` (for `loadFramesBuff`). Example TIFF:
+% set `MESOHOLO_EXAMPLE_TIF` or place a file at `data/fixtures/scanimage/example_scanimage.tif`.
+mesoholo_setup();
+repo0 = mesoholo_repo_root();
+repo0 = repo0(1:end-1);
+tiffn = getenv('MESOHOLO_EXAMPLE_TIF');
+if isempty(tiffn)
+    tiffn = fullfile(repo0, 'data', 'fixtures', 'scanimage', 'example_scanimage.tif');
+end
 
 header = imfinfo(tiffn);
 hSIh = header(1).Software;

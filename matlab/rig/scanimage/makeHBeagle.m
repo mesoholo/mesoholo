@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/makeHBeagle.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [ xyorig,xynew,xyum,nstrips,z,sources ] = makeHBeagle(xy,tilteagle,hSI)
 
 %% Create Array of Targets

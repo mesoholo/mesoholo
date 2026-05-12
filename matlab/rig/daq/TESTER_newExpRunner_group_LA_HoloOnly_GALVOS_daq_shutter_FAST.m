@@ -1,15 +1,33 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/daq/TESTER_newExpRunner_group_LA_HoloOnly_GALVOS_daq_shutter_FAST.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 clear all;
 close all;
-savePath = 'C:\Data\'
+mesoholo_setup();
+savePath = getenv('MESOHOLO_LOCAL_SAVE_ROOT');
+if isempty(savePath)
+    savePath = fullfile(mesoholo_repo_root(), 'data', 'sessions', '_daq_output');
+end
+if ~endsWith(savePath, filesep)
+    savePath = [savePath filesep];
+end
 
 formatOut = 'yymmdd';
 date=num2str(datestr(now,formatOut));
 
-addpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\'));
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\lamiaesuite\'))
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\udaysuite\'))
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\udaysuite_group_dev\'))
-mesoholo_setup();
+daqRoot = getenv('MESOHOLO_DAQ_MATLAB');
+if ~isempty(daqRoot)
+    addpath(genpath(daqRoot));
+    for sub = {'lamiaesuite', 'udaysuite', 'udaysuite_group_dev'}
+        p = fullfile(daqRoot, sub{1});
+        if exist(p, 'dir')
+            rmpath(genpath(p));
+        end
+    end
+end
 
 disp('run msocket holorequest on holo computer before continuing!')
 ExpStruct.mouseID = input('please enter mouse ID: ','s');

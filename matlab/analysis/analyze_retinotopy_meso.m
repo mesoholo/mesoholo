@@ -1,21 +1,27 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/analyze_retinotopy_meso.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 clear all; 
 % close all; clc
+
+mesoholo_setup();
 
 %%
 dimflip = 1; % 1 vertical, 2 horizontal
 
-% gdrivepath = '/Volumes/GoogleDrive/My Drive/';
-% gdrivepath = 'G:/My Drive/';
-% addpath(genpath([gdrivepath 'CODE/Analyze_IC_mesoscope']))
-
-if exist('/Volumes/GoogleDrive/My Drive/CODE/Analyze_IC_mesoscope', 'dir')
-    sireaderpath = '/Volumes/GoogleDrive/My Drive/CODE/Analyze_IC_mesoscope';
-elseif exist('C:\Users\MesoDAQ\Documents\MATLAB', 'dir')
-    sireaderpath = 'C:\Users\MesoDAQ\Documents\MATLAB';
-elseif exist('C:\Users\Hyeyoung\Documents\MATLAB', 'dir')
-    sireaderpath = 'C:\Users\Hyeyoung\Documents\MATLAB';
-else
-    error('check drivepath in this computer')
+sireaderpath = getenv('MESOHOLO_SI_MATLAB');
+if isempty(sireaderpath)
+    repo0 = mesoholo_repo_root();
+    repo0 = repo0(1:end-1);
+    third = fullfile(repo0, 'third_party', 'Analyze_IC_mesoscope');
+    if exist(third, 'dir')
+        sireaderpath = third;
+    else
+        sireaderpath = fullfile(repo0, 'python', 'suite2p_pipeline');
+    end
 end
 
 addpath(genpath(sireaderpath))
@@ -29,22 +35,26 @@ mousedate = 'MU24_1/220803/';
 depth = '101';
 nexp = '001';
 
-% sipath = strcat('/Users/hyeyoung/Documents/DATA/ICexpts_scanimage/', mousedate, 'subretinotopy0/');
-% sipath = strcat(gdrivepath, 'DATA/ICexpts_scanimage/', mousedate, 'subretinotopy1/');
-sipath = strcat('D:HS/', mousedate, 'retinotopy1/');
-
-datapath = strcat('S:/Hyeyoung/visstiminfo/', mousedate);
-cd(strcat(datapath, 'visstiminfo'))
-
-load(strcat(datapath, 'visstiminfo/visstim_retinotopy_subscreen_', depth, '_', nexp, '.mat'))        
+repo0 = mesoholo_repo_root();
+repo0 = repo0(1:end-1);
+relSession = strrep(strtrim(mousedate), '/', filesep);
+sipath = fullfile(repo0, 'data', 'sessions', relSession, 'retinotopy1');
+visBase = fullfile(repo0, 'data', 'visstiminfo', relSession);
+if isfolder(fullfile(visBase, 'visstiminfo'))
+    visstimDir = fullfile(visBase, 'visstiminfo');
+else
+    visstimDir = visBase;
+end
+cd(visstimDir);
+load(fullfile(visstimDir, sprintf('visstim_retinotopy_subscreen_%s_%s.mat', depth, nexp)));
 
 % %%
-tiffns = dir([sipath, '*.tif']);
+tiffns = dir(fullfile(sipath, '*.tif'));
 if numel(tiffns)-1 ~= retinotopy_subscreen.numtrials
     error('number of tif files %d should equal the number of trials %d plus one', numel(tiffns), retinotopy_subscreen.numtrials)
 end
 
-header = imfinfo([sipath tiffns(1).name]);
+header = imfinfo(fullfile(sipath, tiffns(1).name));
 hSIh = header(1).Software;
 hSIh = regexp(splitlines(hSIh), ' = ', 'split');
 for n=1:length(hSIh)
@@ -76,7 +86,7 @@ mu = median([Ly, Lx]./szXY, 1);
 imin = cXY .* mu;
 
 % deduce flyback frames from most filled z-plane
-stack = loadFramesBuff([sipath tiffns(1).name],1,1,1);
+stack = loadFramesBuff(fullfile(sipath, tiffns(1).name),1,1,1);
 
 n_rows_sum = sum(Ly);
 n_flyback = (size(stack, 1) - n_rows_sum) / max(1, (nrois - 1));
@@ -108,7 +118,7 @@ loccnt = zeros(ny,nx);
 tic
 for itrial = 1:size(retinotopy_subscreen.locinds,1)
 % import ScanImageTiffReader.ScanImageTiffReader;
-trialfile=ScanImageTiffReader([sipath tiffns(itrial+1).name]);
+trialfile=ScanImageTiffReader(fullfile(sipath, tiffns(itrial+1).name));
 trialdata = trialfile.data();
     trialmean = squeeze(mean(trialdata(:,:,1:numframes2avg),3));
     
@@ -144,7 +154,7 @@ end
 end
 % flipavgbyloc = flip(avgbyloc, 2);
 
-trialfile=ScanImageTiffReader([sipath tiffns(1).name]);
+trialfile=ScanImageTiffReader(fullfile(sipath, tiffns(1).name));
 trialdata = trialfile.data();
 basetif = squeeze(mean(trialdata(:,:,1:numframes2avg),3));
 baseframe = zeros(max(Ly), sum(Lx));

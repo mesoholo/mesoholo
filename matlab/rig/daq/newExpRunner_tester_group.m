@@ -1,8 +1,20 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/daq/newExpRunner_tester_group.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 clear;
-addpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\'));
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\lamiaesuite\'))
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\udaysuite\'))
-rmpath(genpath('C:\Users\MesoHolo\Documents\MATLAB\MesoDAQCode\udaysuite_group_dev\'))
+daqRoot = getenv('MESOHOLO_DAQ_MATLAB');
+if ~isempty(daqRoot)
+    addpath(genpath(daqRoot));
+    for sub = {'lamiaesuite', 'udaysuite', 'udaysuite_group_dev'}
+        p = fullfile(daqRoot, sub{1});
+        if exist(p, 'dir')
+            rmpath(genpath(p));
+        end
+    end
+end
 mesoholo_setup();
 ntargs = 40;
 holoRequest.targets = rand(ntargs,3);

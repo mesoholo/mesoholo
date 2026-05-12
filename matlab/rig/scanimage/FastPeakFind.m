@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/FastPeakFind.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function  [cent, varargout]=FastPeakFind(d, thres, filt ,edg, res, fid)
 % Analyze noisy 2D images and find peaks using local maxima (1 pixel
 % resolution) or weighted centroids (sub-pixel resolution).

@@ -6,9 +6,11 @@ import time
 import logging
 import multiprocessing
 
+from _mesoholo_paths import DATA_DIR
+
 planes = 5
-data_path = 'D://HS//HS_Ai203_2//220721//'
-out_path = 'D://HS//HS_Ai203_2//220721//Online_noreg//'
+data_path = str(DATA_DIR / "sessions" / "HS_Ai203_2" / "220721")
+out_path = str(DATA_DIR / "sessions" / "HS_Ai203_2" / "220721" / "Online_noreg")
 
 tic1 = time.time()
 os.chdir(data_path)

@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/holo_computer/function_loadparameters2.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [Setup ] = function_loadparameters2(varargin)
 
 
@@ -54,7 +60,11 @@ Setup.SLM.timeout_ms = 5000;
 % Setup.SLM.lut_file = 'C:\Program Files\Meadowlark Optics\Blink OverDrive Plus\LUT Files\slm5326_at1064.lut'; %1/xx/2020 included
 % Setup.SLM.lut_file = 'C:\Program Files\Meadowlark Optics\Blink OverDrive Plus\LUT Files\slm5405_at1035.lut'; %1/xx/2020 included
 % Setup.SLM.lut_file = 'C:\Program Files\Meadowlark Optics\Blink OverDrive Plus\LUT Files\linear.lut'; %1/xx/2020 included
-Setup.SLM.lut_file = 'C:\Users\MesoSI\Documents\MATLAB\slm5179_at1030exSatsumaCurrent.lut';
+lut = getenv('MESOHOLO_SLM_LUT');
+if isempty(lut)
+    lut = fullfile(mesoholo_repo_root(), 'data', 'fixtures', 'slm', 'slm5179_at1030exSatsumaCurrent.lut');
+end
+Setup.SLM.lut_file = lut;
 disp('Updated LUT file')
 
 
@@ -98,8 +108,15 @@ Setup.Displaypath = 'Calib_Displays';
 
 Setup.Sutterport = 'COM6';%'COM6'
 
-Setup.Holorequestpath = 'S:\Mesoshare\holography\Holorequests\HoloRequest_DAQ\';
-Setup.HoloListpath = 'C:\HoloListsForPreload\';
+Setup.Holorequestpath = MesoLocFile_SI().HoloRequest_DAQ;
+holoList = getenv('MESOHOLO_HOLOLISTS_PATH');
+if isempty(holoList)
+    holoList = fullfile(mesoholo_repo_root(), 'data', 'fixtures', 'hololists');
+end
+if ~endsWith(holoList, filesep)
+    holoList = [holoList filesep];
+end
+Setup.HoloListpath = holoList;
 
 end
 

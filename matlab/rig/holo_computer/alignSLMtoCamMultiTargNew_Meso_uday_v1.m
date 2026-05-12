@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/holo_computer/alignSLMtoCamMultiTargNew_Meso_uday_v1.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function alignSLMtoCamMultiTargNew_Meso_uday_v1
 %alignSLMtoCamMultiTargNew_Meso_uday_v1  Full 3D calibration: ScanImage ↔ SLM ↔ Camera.
 %
@@ -69,7 +75,10 @@ cfg.msocketAcceptTimeoutSec = 30;
 
 %% Pathing / repo setup
 tBegin = tic;
-rmpath(genpath('C:\Users\MesoSI\Desktop\FromHoloComp'))
+stalePath = getenv('MESOHOLO_RMPATH_STALE');
+if ~isempty(stalePath) && exist(stalePath, 'dir')
+    rmpath(genpath(stalePath));
+end
 mesoholo_setup();
 % addpath(genpath('C:\Program Files\Meadowlark Optics\Blink OverDrive Plus\'));
 savepath
@@ -644,7 +653,14 @@ power = 10;
 
 Bgd = uint8(mean(frame,3));
 meanBgd = mean(single(frame(:)));
-save(['C:\Users\MesoSI\Desktop\Lamiae_20240429_MesoHologalvo_characterisations\letters\RighttoLeft\M_1.mat'], 'frame','sutterX','sutterY','ao0','ao1','sutterZ','power');
+outDir = getenv('MESOHOLO_CALIB_EXPORT');
+if isempty(outDir)
+    outDir = fullfile(mesoholo_repo_root(), 'data', 'exports', 'slm_align_debug');
+end
+if ~exist(outDir, 'dir')
+    mkdir(outDir);
+end
+save(fullfile(outDir, 'M_1.mat'), 'frame','sutterX','sutterY','ao0','ao1','sutterZ','power');
 %% Check distribution of peak intensities
 
 frame = function_BasGetFrame(Setup,10);% numFramesCoarseHolo added to be used elsewhere 7/16/2020 -Ian
@@ -3115,11 +3131,17 @@ disp('Moving files')
 tMov = tic;
 
 %on ScanImage Computer
+locationsSI = MesoLocFile_SI();
 servercalibfolder = ['calib_',datestr(now,'mmddyyyy'),'_',datestr(now,'HHMM')];
-servercalibroot = 'S:\Mesoshare\holography\SpatialCalib\';
-destination = [servercalibroot,servercalibfolder];
-mkdir([servercalibroot,servercalibfolder]);
-source = 'C:\Calib\Temp\calib*';
+servercalibroot = locationsSI.SpatialCalib;
+destination = fullfile(servercalibroot, servercalibfolder);
+mkdir(destination);
+source = getenv('MESOHOLO_CALIB_TEMP_SOURCE');
+if isempty(source)
+    r = mesoholo_repo_root();
+    r = r(1:end-1);
+    source = fullfile(r, 'data', 'fixtures', 'calib', 'Temp', 'calib*');
+end
 
 %clear invar
 invar = msrecv(SISocket,0.01);

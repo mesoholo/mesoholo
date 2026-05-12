@@ -1,64 +1,50 @@
-% the previous version (makeMasks3D_holeburn_HS) returns different
-% holoRequest.targets for every MROI setting
-% we want holoRequest.targets to stay the same (converted to the
-% calibration setting) regardless of the MROI setting
-
-%%%%%%% only changed 3 lines
-% xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1)-1);
-% xyorig(:,2) = round(xynorm(:,2)*fullnpix_orig(2));
-% holoRequest.targets=[fliplr(xyorig) centerZc];
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/fijitomesosi.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
 
 %% Create Array of Targets
-sipix = 512;
+
+clearvars -except hSI*
+
+nstripsinit = length(hSI.hRoiManager.currentRoiGroup.rois);
+flyback = 50;
+Xsipix = 400 ;% Pixel count X from scanfield
+Ysipix = 600; % Pixel count Y from scanfield
 radius = 5;
-
-xy = [  50 200;...
-    80, 200;...
-    110, 200;...
-    140, 200;...
-    170, 200;...
-    200, 200;...
-    230, 200;...
-    260, 200;...
-    290, 200;...
-    320, 200;...
-    350, 200;...
-    200, 230;...
-    200, 260;...
-    200, 290;...
-    170, 320;...
-    230, 320];
-xy = xy+repmat([56,56],[16,1]);
-xy = xy*sipix/512;
-%     z = [-5 -4 -3 -2 -1 0 1 2 3 4 5 0 0 0 0 0];
-
-for i=1:5
-    %    6+i:11
-    xy = cat(1,xy, bsxfun(@minus,xy(1:(5-i),:), [0 25*i*sipix/512 ]));
-    xy = cat(1,xy, bsxfun(@plus,xy(7+i:11,:), [0 25*i*sipix/512 ]));
+% Read XY Fiji coordinates X in Fiji same as X in Pixel Count 
+addpath(fileparts(fileparts(mfilename('fullpath')))); % .../matlab
+csvPath = getenv('MESOHOLO_FIJI_TARGETS_CSV');
+if isempty(csvPath)
+    csvPath = fullfile(mesoholo_repo_root(), 'data', 'fixtures', 'fiji', 'targs10S2.csv');
 end
-
+xy = importfile(csvPath, 2, inf); % override path with MESOHOLO_FIJI_TARGETS_CSV if needed 
+%xy=matNKT;
 z=zeros([size(xy,1) 1]);
-
-for i=1:11
-    z(find(xy(:,1)==30*i+20+56))=0*15*(6-i);%*0 for flat eagle pattern
+%     z = [-5 -4 -3 -2 -1 0 1 2 3 4 5 0 0 0 0 0];
+fijixy = zeros(size(xy,1),2); %Nb might fail for Y coords  between 600 and 650 and between 1250 and 1300
+for i=1:size(xy,1)
+    quotient = fix((xy(i,2))/(Ysipix+flyback));
+    fijixy(i,1) = xy(i,1) + quotient*Xsipix;
+    fijixy(i,2) = xy(i,2)-quotient*(Ysipix+flyback);
 end
-xy(:,1) = xy(:,1)-00; %[-100:100] Offset the eagle by these many pixels (- moves it up, + moves it down)
-xy(:,2) = xy(:,2)-00; %[-100:100] Offset the eagle by these many pixels (- moves it up, + moves it down)
-% (-80x, 0y) avoids zero order in the center fork and also roughly
-% balances DEs in both wings
 
-xynorm = xy/sipix;
-xyum = xynorm;
+xynorm = zeros(size(xy,1),2);
+for i=1:size(xy,1)
+    xynorm(i,1) = fijixy(i,1)/(nstripsinit*Xsipix);
+    xynorm(i,2) = fijixy(i,2)/(Ysipix);
+end
+
 xynew = xynorm;
 %%%%%%%%%%%%%% Holemasks generated in normalized coordinates
 
 nstrips_orig = 3;
-nxpiSx_orig = 400*ones(nstrips_orig,1);
+nxpix_orig = 400*ones(nstrips_orig,1);
 nypix_orig = 600*ones(nstrips_orig,1);
 fullnpix_orig = [sum(nxpix_orig),mean(nypix_orig)];
 
-xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1)-1);
+xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1));
 xyorig(:,2) = round(xynorm(:,2)*fullnpix_orig(2));
 
 %%%%%%%%%%%%%% Holemasks converted to pixel coordinates with respect to
@@ -77,7 +63,7 @@ fullycenter_orig = -450; %um
     );
 fullxum_orig = round(fullxum_orig);
 fullyum_orig = round(fullyum_orig);
-for i=1:size(xyorig,1)
+for i=1:size(xyorig,1)  
     currind = fullxpix_orig==xyorig(i,1) & fullypix_orig==xyorig(i,2);
     xyum(i,:) = [fullxum_orig(currind),fullyum_orig(currind)];
 end
@@ -259,8 +245,8 @@ end
 % pixelToRefTransform = evalin('base','hSI.hRoiManager.currentRoiGroup.rois(1).scanfields(1).pixelToRefTransform');
 % centerXY = scanimage.mroi.util.xformPoints(centerXY,inv(pixelToRefTransform));
 centerXY = fliplr(xynew);
-holoRequest.targets=[fliplr(xyorig) centerZc];
-holoRequest.actualtargets = [fliplr(xynew) centerZ];
+holoRequest.targets=[centerXY centerZc];
+holoRequest.actualtargets = [centerXY centerZ];
 
 holoRequest.xoffset=MODxoffset;
 holoRequest.yoffset=MODyoffset;

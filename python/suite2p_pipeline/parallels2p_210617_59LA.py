@@ -1,3 +1,4 @@
+"""Parallel suite2p (LA example). Uses repository-local ``data/sessions`` paths."""
 import os
 import suite2p
 from suite2p import run_s2p
@@ -6,9 +7,11 @@ import time
 import logging
 import multiprocessing
 
+from _mesoholo_paths import DATA_DIR
+
 planes = 5
-data_path = 'D://Lamiae//20220427-PMTtroubleshoot//HSAi203-2//largefov50trials//'
-out_path = 'D://Lamiae//20220427-PMTtroubleshoot//HSAi203-2//suite2panalysis//'
+data_path = str(DATA_DIR / "sessions" / "example_lamiae" / "20220427_pmt" / "tiffs")
+out_path = str(DATA_DIR / "sessions" / "example_lamiae" / "20220427_pmt" / "suite2p_out")
 
 tic1 = time.time()
 os.chdir(data_path)

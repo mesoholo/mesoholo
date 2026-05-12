@@ -5,7 +5,7 @@ Code used for mesoscale holography experiments (Abdeladim et al., 2026).
 This repository was assembled from multiple acquisition/control computers; the original code contained many machine-specific paths. The repo is now organized into:
 
 - **`matlab/rig/`**: online acquisition & control code (ScanImage PC, DAQ PC, hologram/SLM PC, visual stimulus PC).
-- **`matlab/analysis/`**: offline analysis utilities (retinotopy, ROI/mask utilities, etc.).
+- **`matlab/analysis/`**: offline analysis utilities (retinotopy, ROI/mask utilities, etc.). The former `matlab/analysis/HS/` subtree was flattened into this folder.
 - **`python/suite2p_pipeline/`**: Suite2p-related conversion/pipeline helpers (notebooks and scripts).
 - **`matlab/config/`**: shared path configuration used by multiple scripts.
 - **`dump/`**: local-only staging folder (ignored by git).
@@ -13,9 +13,10 @@ This repository was assembled from multiple acquisition/control computers; the o
 ### Quick start (MATLAB)
 
 1. Add this repo to your MATLAB path (or run from repo root after `cd`).
-2. Configure shared/local paths via environment variables:
-   - **`MESOHOLO_SHARED_ROOT`**: shared holography folder (default: `S:\Mesoshare\holography`)
-   - **`MESOHOLO_LOCAL_SAVE_ROOT`**: local save root (default: `D:\Data` on SI side, `C:\Data` on DAQ side)
+2. Run `mesoholo_setup()` once per session (from `matlab/mesoholo_setup.m`) to add `matlab/` subtrees and `python/suite2p_pipeline/` to your path.
+3. Configure paths via environment variables (optional; **defaults are repository-local** under `data/` — see `data/README.md`):
+   - **`MESOHOLO_SHARED_ROOT`**: shared holography folder (default: `<repo>/data/shared/holography`)
+   - **`MESOHOLO_LOCAL_SAVE_ROOT`**: SI-side local save root (default: `<repo>/data/sessions/_si_local`)
    - **`MESOHOLO_CALIB_PATH`**: folder containing `ActiveCalib.mat` (variable `CoC`)
    - **`MESOHOLO_MSOCKET_PATH`** (optional): path to a MATLAB `msocket` implementation
 

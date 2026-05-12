@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: python/suite2p_pipeline/loadFramesBuff.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [frames, headers] = loadFramesBuff(tiff, firstIdx, lastIdx, stride, temp_file)
 %loadFrames Loads the frames of a Tiff file into an array (Y,X,T)
 %   MOVIE = loadFrames(TIFF, [FIRST], [LAST], [STRIDE], []) loads

@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/mesoholo_setup.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function repoRoot = mesoholo_setup(varargin)
 %mesoholo_setup  Add this repository to the MATLAB path.
 %
@@ -23,6 +29,11 @@ addpath(matlabRoot);
 addpath(genpath(fullfile(matlabRoot, 'config')));
 addpath(genpath(fullfile(matlabRoot, 'rig')));
 addpath(genpath(fullfile(matlabRoot, 'analysis')));
+
+s2pMat = fullfile(repoRoot, 'python', 'suite2p_pipeline');
+if exist(s2pMat, 'dir')
+    addpath(s2pMat);
+end
 
 if opts.AddThirdParty
     thirdParty = fullfile(matlabRoot, 'third_party');

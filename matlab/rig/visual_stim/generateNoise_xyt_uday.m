@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/visual_stim/generateNoise_xyt_uday.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function moviedata=generateNoise_xyt_uday(maxSpatFreq,maxTempFreq,duration,wininfo,result,movtype,binarize)
 %generateNoise_xyt_uday  Generate band-limited spatiotemporal noise movies.
 %

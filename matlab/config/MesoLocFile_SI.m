@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/config/MesoLocFile_SI.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function locations = MesoLocFile_SI()
 %MesoLocFile_SI  Centralized file/folder locations for ScanImage-side code.
 %
@@ -8,24 +14,28 @@ function locations = MesoLocFile_SI()
 %
 % Configuration:
 % - Set environment variable `MESOHOLO_SHARED_ROOT` to your shared holography
-%   directory (e.g. `S:\Mesoshare\holography` on the rig network).
-% - Set environment variable `MESOHOLO_LOCAL_SAVE_ROOT` to a local data root
-%   (e.g. `D:\Data`).
+%   directory on the rig network (optional; defaults to `data/shared/holography` under this repo).
+% - Set environment variable `MESOHOLO_LOCAL_SAVE_ROOT` for SI-side local saves
+%   (optional; defaults to `data/sessions/_si_local` under this repo).
 %
 % Notes:
 % - This is the ScanImage-side locations file. See `MesoLocFile_DAQ` for the
 %   DAQ computer defaults.
 
+cfgDir = fileparts(mfilename("fullpath"));   % .../matlab/config
+matlabDir = fileparts(cfgDir);               % .../matlab
+repoRoot = fileparts(matlabDir);             % repository root
+
 sharedRoot = getenv("MESOHOLO_SHARED_ROOT");
 if strlength(sharedRoot) == 0
-    % Default matches the original rig mapping; override via env var.
-    sharedRoot = "S:\Mesoshare\holography";
+    % Repository-local default (create `data/shared/holography/...` or set env var).
+    sharedRoot = string(fullfile(repoRoot, "data", "shared", "holography"));
 end
 sharedRoot = char(sharedRoot);
 
 localSaveRoot = getenv("MESOHOLO_LOCAL_SAVE_ROOT");
 if strlength(localSaveRoot) == 0
-    localSaveRoot = "D:\Data";
+    localSaveRoot = string(fullfile(repoRoot, "data", "sessions", "_si_local"));
 end
 localSaveRoot = char(localSaveRoot);
 

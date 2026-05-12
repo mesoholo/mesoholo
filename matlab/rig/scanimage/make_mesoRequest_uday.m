@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/make_mesoRequest_uday.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [ mesoRequest ] = make_mesoRequest_uday(all_XYnew,all_centersZ,all_yoffsets,all_xoffsets,xrotate,yrotate,all_zMaps,all_AO0s,all_AO1s,all_powers,hSI,Zplanes,powcurve)
 %make_mesoRequest_uday  Build a multi-FOV mesoscale holoRequest struct.
 %

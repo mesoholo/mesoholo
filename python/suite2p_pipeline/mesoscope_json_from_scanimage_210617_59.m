@@ -1,8 +1,11 @@
+%MESOHOLO-DOC
+% Repository: mesoholo (Abdeladim et al., 2026). File: python/suite2p_pipeline/mesoscope_json_from_scanimage_210617_59.m
+% Purpose: Emit mesoscope-style JSON from ScanImage TIFF headers (session data under ``data/sessions``).
+%
 % this script errors in Matlab R2016b. Run in later versions
-% addpath(genpath('C:\Users\Hyeyoung\Documents\MATLAB'))
 
-% set to folder with tiffs
-root = 'D:\HS\HS_CamKIIGC6s_59\210617\RFcircleCI1\';
+% set to folder with tiffs (repository-local)
+root = fullfile(mesoholo_repo_from_script(), 'data', 'sessions', 'HS_CamKIIGC6s_59', '210617', 'RFcircleCI1');
 fs = dir(fullfile(root, '*.tif'));
 fname = fullfile(fs(1).folder, fs(1).name);
 
@@ -113,13 +116,18 @@ end
 data.data_path{1} = fpath;
 disp(fpath)
 
-% save path is on different drive (G:)
-fpath = 'D:';
-for j = 2:numel(s)
-    fpath = [fpath '/' s{j}];
+% save_path0: fast disk for suite2p temp binaries (defaults to same path as TIFFs).
+fastRoot = getenv('MESOHOLO_SUITE2P_FAST_DISK');
+if isempty(fastRoot)
+    data.save_path0 = fpath;
+else
+    fpathSave = fastRoot;
+    for j = 2:numel(s)
+        fpathSave = [fpathSave '/' s{j}];
+    end
+    data.save_path0 = fpathSave;
 end
-data.save_path0 = fpath;
-disp(fpath)
+disp(data.save_path0)
 
 d = jsonencode(data);
 disp(fullfile(root, 'ops.json'))

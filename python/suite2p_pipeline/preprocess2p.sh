@@ -27,7 +27,8 @@ matlab -nosplash -nodesktop -r "mesoscope_json_from_scanimage_210617_59; exit"
 
 echo "conversion complete"
 
-python C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\suite2p_pipeline\suite2p_pipeline_210617_59.py
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+python "$SCRIPT_DIR/suite2p_pipeline_210617_59.py"
 
 echo "don't forget to move data!"
 #ssh dtn

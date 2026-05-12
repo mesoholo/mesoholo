@@ -1,13 +1,16 @@
+"""Suite2p runner (LA session example). Paths are under the repo ``data/sessions``."""
 import os
 import suite2p
 from suite2p.run_s2p import run_s2p
 import json
 import time
 
+from _mesoholo_paths import DATA_DIR
+
 tic1 = time.time()
 
-data_path = 'D://Lamiae//20220521-Ai203-LA01-MultitargetExp//03-3x3FOVP100P0-100trials//'
-fast_disk = 'D://Lamiae//20220521-Ai203-LA01-MultitargetExp//03-3x3FOVP100P0-100trials//'
+data_path = str(DATA_DIR / "sessions" / "example_lamiae" / "20220521_multitarget" / "tiffs")
+fast_disk = str(DATA_DIR / "sessions" / "example_lamiae" / "20220521_multitarget" / "online")
 
 
 # sys.path.append("")

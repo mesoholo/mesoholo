@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/s2ptoholoRequest.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % this function is essentially the inverse of updateSIrois_meso
 % NOTE, USE Zc NOT Z=0!!!
 % xynew should come from suite2p'd targets

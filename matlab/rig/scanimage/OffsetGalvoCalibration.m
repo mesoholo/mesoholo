@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/OffsetGalvoCalibration.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 clearvars -EXCEPT hSI hSICtl
 % User initializes the offsets of the FOV to calibrate. FOV to calibrate
 % will correspond to non-Nan values.AO0 values (X galvos) correspond to
@@ -77,7 +83,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% Make and send Holorequest (with custom offsets, tilieagle,power, galvo voltages) for each FOV to calibrate
 %Delete all temporary holorequests before making new ones
-folderpath = 'S:/Mesoshare/holography/Holorequests/HoloRequest_DAQ/HoleburnCalibOffsets_Galvos/';
+folderpath = locations.HoloRequest_DAQ_Galvos;
 files = dir(fullfile(folderpath,'holoRequest*.mat'));
 for i =1:length(files)
     filepath = fullfile(folderpath,files(i).name);
@@ -105,7 +111,7 @@ xynew = maketiledSIrois(allinfo,numNonNanElements,hSI);
 
 %% Saves all offset grids (This needs to be ran all the times since the segmantation code is reading from the grids)
 
-savepath = 'S:/Mesoshare/holography/Holorequests/HoloRequest_DAQ/HoleburnCalibOffsets_Galvos/';
+savepath = locations.HoloRequest_DAQ_Galvos;
 
 %%%% Just to make sure allinfo is updated for final changes to offset
 %%%% (without another holeburn)

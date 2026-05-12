@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: python/suite2p_pipeline/convertcoords_HoloFOVtoCurrentFOV.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 % xyintegration = updateSIrois_meso(hSI,holoRequest,clearprev, nstrips_orig, fullnpix_orig, fullxsize_orig, fullysize_orig, fullxcenter_orig, fullycenter_orig);
 function xynew = convertcoords_HoloFOVtoCurrentFOV(hSI,xyorig, fullnpix_orig, fullxsize_orig, fullysize_orig, fullxcenter_orig, fullycenter_orig)
 

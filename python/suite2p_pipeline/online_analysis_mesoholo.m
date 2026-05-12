@@ -1,5 +1,11 @@
+%MESOHOLO-DOC
+% Repository: mesoholo (Abdeladim et al., 2026). File: python/suite2p_pipeline/online_analysis_mesoholo.m
+% Purpose: Load suite2p online outputs, merge planes, and relate to visual stimulus metadata.
+% Paths below are repository-local under ``data/sessions`` and ``data/visstiminfo``; adjust
+% ``mousedate`` to match your folder layout after copying data into the repo tree.
+%
 disp('RUN THIS IN THE INSTANCE RUNNING ')
-% find out ActualHoloFOV boundaries using C:\Users\MesoDAQ\Documents\MATLAB\MesoSICode\HScode\makeMasks3D_holeburn_backup.m
+% find out ActualHoloFOV boundaries using matlab/analysis/makeMasks3D_holeburn_backup.m
 %{
 % xynew(:,1) is the horizontal axis, xynew(:,2) is the vertical axis
 xyorig = [50 50; fullnpix_orig(1)-50 fullnpix_orig(2)-50];
@@ -21,9 +27,11 @@ mousedate = 'HS_Ai203_2/220722/';
 neuopt = 'all';
 
 %% load suite2p output: F, Fneu, spks, iscell, ops, redcell, stat
-mesoSIpath = sprintf('D:/HS/%s', mousedate);
-onlinepath = sprintf('D:/HS/%sOnline/', mousedate); %plane_0/suite2p/plane0/';
-vispath = sprintf('S:/Hyeyoung/visstiminfo/%svisstiminfo/', mousedate);
+repo = mesoholo_repo_from_script();
+parts = regexp(strtrim(mousedate), '[^/]+', 'match');
+mesoSIpath = fullfile(repo, 'data', 'sessions', parts{:});
+onlinepath = fullfile(repo, 'data', 'sessions', parts{:}, 'Online');
+vispath = fullfile(repo, 'data', 'visstiminfo', parts{:}, 'visstiminfo');
 % load(sprintf('%svisstim_staticICtxi_%s_%s.mat', vispath, depth, nexp))
 
 visfiles = dir([vispath, '*.mat']);
@@ -210,7 +218,7 @@ end
 % % get frame number in each tif file in directory
 % this takes a long long time using google drive file stream :(
 
-sireaderpath = 'C:\Users\MesoDAQ\Documents\MATLAB';
+sireaderpath = fullfile(mesoholo_repo_from_script(), 'python', 'suite2p_pipeline');
 addpath(genpath(sireaderpath))
 
 if ops.look_one_level_down

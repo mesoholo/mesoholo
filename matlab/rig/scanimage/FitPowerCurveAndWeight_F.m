@@ -1,5 +1,18 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/FitPowerCurveAndWeight_F.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 %% If reloading PSTHs
-temp = load('D:\Uday\MU76_2_aav189\20260414\004\MU76_2_stimtest_depth220_3.1x3.1_z0_g3Hz_pow48_89targs_1x100ms@105ipi_PSTHs.mat');
+tempPath = getenv('MESOHOLO_PSTH_CACHE');
+if isempty(tempPath)
+    r = mesoholo_repo_root();
+    r = r(1:end-1);
+    tempPath = fullfile(r, 'data', 'sessions', 'MU76_2_aav189', '20260414', '004', ...
+        'MU76_2_stimtest_depth220_3.1x3.1_z0_g3Hz_pow48_89targs_1x100ms@105ipi_PSTHs.mat');
+end
+temp = load(tempPath);
 PSTHs = temp.out.PSTHs;
 powers = temp.out.powers;
 

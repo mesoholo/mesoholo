@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/daq/newStimParams_group_LA_HoloOnly_GALVOS_FAST.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [holoStimParams] = newStimParams_group(holoRequest)
 hSP.vispulsedelay = 100;
 hSP.isipre =2000;

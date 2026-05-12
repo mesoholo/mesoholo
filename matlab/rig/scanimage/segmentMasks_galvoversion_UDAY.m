@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/segmentMasks_galvoversion_UDAY.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 %% Gets available holographic FOVs given a SI mesoscale FOV
 %Select your current imaging FOV. Make sure during all these steps to have
 %the pixel size set to 1x1 um/pixel (matched with actual holo FOV initial
@@ -16,10 +22,13 @@ mesoholo_setup();
 cfg = struct();
 cfg.corepath = getenv("MESOHOLO_DATA_ROOT");
 if strlength(cfg.corepath) == 0
-    cfg.corepath = 'D:\Uday\'; % legacy default; override via MESOHOLO_DATA_ROOT
+    r = mesoholo_repo_root();
+    r = r(1:end-1);
+    cfg.corepath = string(fullfile(r, 'data', 'sessions'));
 else
-    cfg.corepath = [char(cfg.corepath) filesep];
+    cfg.corepath = string(cfg.corepath);
 end
+cfg.corepath = [char(cfg.corepath) filesep];
 
 cfg.mouseid = 'MU76_2_aav189'; % name of main mouse folder inside core path
 cfg.date = '20260503/000'; % folder with the TIFF data, organized in numbered folders
@@ -254,7 +263,8 @@ for i=1:length(XYnewtosave)
 end
 title('Segmented cells and Assigned holographic FOVS')
 %% Here instead of filtering based on manually selected ROIs as before, we filter based on wether the associated FOV is calibrated or not
-load('S:\Mesoshare\holography\Holorequests\HoloRequest_DAQ\HoleburnCalibOffsets_Galvos\allinfo.mat')
+loc = MesoLocFile_SI();
+load(fullfile(loc.HoloRequest_DAQ_Galvos, 'allinfo.mat'))
 disp(['Found ' num2str(size(allinfo,1)) ' calibrated holo FOVs']);
 indexes_calibrated = allinfo(:,1:2);
 subIndexesmain = zeros(size(indexes_calibrated,1),1);

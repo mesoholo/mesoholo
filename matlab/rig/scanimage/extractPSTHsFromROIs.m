@@ -1,11 +1,23 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/extractPSTHsFromROIs.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 %%
 mesoholo_setup();
 
-% corepath = 'F:\CalciumImagingData\Mesoscope\'; % core path
-corepath = 'D:\Uday\'; % core path
-% corepath = 'P:\uday\Meso\data\MesoSIDataShare\'; % core path
-% corepath = 'E:\lab\MesoData\';
-% corepath = 'E:\TempData\';
+cr = getenv('MESOHOLO_DATA_ROOT');
+if isempty(cr)
+    r = mesoholo_repo_root();
+    r = r(1:end-1);
+    corepath = fullfile(r, 'data', 'sessions');
+else
+    corepath = cr;
+end
+if ~endsWith(corepath, filesep)
+    corepath = [corepath filesep];
+end
 mouseid = 'MU76_2_aav189'; % name of main mouse folder inside core path
 date = '20260503'; % folder with the TIFF data, organized in numbered folders
                    % The numbered folders are in sequence from the

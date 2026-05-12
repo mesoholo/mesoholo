@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/visual_stim/run_cmnoise_uday_notrigger.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function run_cmnoise_uday_notrigger(varargin)
 %%% I am a full-screen noise stimulus to generate lots of activity hopefully.
 %%% DEFAULT BEHAVIOR -> no tiggers, just play a cmn movie, 10 times, 10

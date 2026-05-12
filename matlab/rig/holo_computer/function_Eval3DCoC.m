@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/holo_computer/function_Eval3DCoC.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function Get = function_Eval3DCoC(CoC,Ask,modelterms)
 
 FitX = CoC.FitX;

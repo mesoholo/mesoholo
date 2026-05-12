@@ -1,5 +1,10 @@
-onlinepath = 'D:\HS\HS_CamKIIGC6s_59\210617\Online\';
-online2path = 'D:\HS\HS_CamKIIGC6s_59\210617\Online_old\';
+%MESOHOLO-DOC
+% Repository: mesoholo (Abdeladim et al., 2026). File: python/suite2p_pipeline/check_onlineVSonline.m
+% Purpose: Compare two online suite2p output directories for the same session.
+%
+repo = mesoholo_repo_from_script();
+onlinepath = fullfile(repo, 'data', 'sessions', 'HS_CamKIIGC6s_59', '210617', 'Online');
+online2path = fullfile(repo, 'data', 'sessions', 'HS_CamKIIGC6s_59', '210617', 'Online_old');
 
 %% load suite2p outputs
 % Nplanes refers to number of MROI strips

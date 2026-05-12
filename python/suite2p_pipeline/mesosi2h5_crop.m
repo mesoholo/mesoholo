@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: python/suite2p_pipeline/mesosi2h5_crop.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 %% EDIT files that do not have frame numbers that are multiples of Nplanes * numchannels
 % this script replaces check_before_suite2p
 % this should be done in savio
@@ -6,15 +12,18 @@
 clear all;
 loadall = true;
 
-mesoSIpath = 'M:\ICmesoholoexpts_scanimage\HS_Ai203_2\220531\';
-vispath = 'M:\ICmesoholoexpts_scanimage\HS_Ai203_2\220531\visstiminfo\';
+repo0 = fileparts(fileparts(fileparts(mfilename('fullpath'))));
+addpath(fullfile(repo0, 'matlab'));
+
+mesoSIpath = fullfile(repo0, 'data', 'sessions', 'HS_Ai203_2', '220531');
+vispath = fullfile(mesoSIpath, 'visstiminfo');
 
 xlb = 1002; % horizontal
 xub = 1906; % horizontal
 ylb = 415;
 yub = 865;
 
-visfiles = dir([vispath, '*.mat']);
+visfiles = dir(fullfile(vispath, '*.mat'));
 for ii= 1:numel(visfiles)
     disp(visfiles(ii).name)
 end
@@ -24,19 +33,19 @@ disp(foldername)
 input('USER NEEDS TO INPUT FOLDER NAMES FOR EVERY SESSION IN ORDER MATCHING EXPTIDN')
 
 %%
-if exist('/Volumes/GoogleDrive/My Drive/CODE/Analyze_IC_mesoscope', 'dir')
-    sireaderpath = '/Volumes/GoogleDrive/My Drive/CODE/Analyze_IC_mesoscope';
-elseif exist('C:\Users\MesoDAQ\Documents\MATLAB', 'dir')
-    sireaderpath = 'C:\Users\MesoDAQ\Documents\MATLAB';
-elseif exist('C:\Users\Hyeyoung\Documents\MATLAB', 'dir')
-    sireaderpath = 'C:\Users\Hyeyoung\Documents\MATLAB';
-else
-    error('check drivepath in this computer')
+sireaderpath = getenv('MESOHOLO_SI_MATLAB');
+if isempty(sireaderpath)
+    third = fullfile(repo0, 'third_party', 'Analyze_IC_mesoscope');
+    if exist(third, 'dir')
+        sireaderpath = third;
+    else
+        sireaderpath = fullfile(repo0, 'python', 'suite2p_pipeline');
+    end
 end
 addpath(genpath(sireaderpath))
 import ScanImageTiffReader.ScanImageTiffReader;
 
-fnh = [mesoSIpath, 'merged_cropped.h5'];
+fnh = fullfile(mesoSIpath, 'merged_cropped.h5');
 if exist(fnh, 'file')
     delete(fnh)
 end
@@ -44,15 +53,15 @@ end
 % tiffns = cat(1, dir([SIpath, '*.tif']), dir([SIpath, '*/*.tif']));
 for f = 1:numel(foldername)
     if f == 1
-        tiffns = dir([mesoSIpath, foldername{f}, '/*.tif']);
+        tiffns = dir(fullfile(mesoSIpath, foldername{f}, '*.tif'));
     else
-        tiffns = cat(1, tiffns, dir([mesoSIpath, foldername{f}, '/*.tif']));
+        tiffns = cat(1, tiffns, dir(fullfile(mesoSIpath, foldername{f}, '*.tif')));
     end
 end
 % tiffns = cat(1, tiffns, dir([mesoSIpath, '*.tif']));
 
 %% dimensions of mesoscope scanimage tif files
-tiffile = [tiffns(1).folder '\' tiffns(1).name];
+tiffile = fullfile(mesoSIpath, foldername{1}, tiffns(1).name);
 tiffheader = imfinfo(tiffile);
 hSIh = tiffheader(1).Software;
 hSIh = regexp(splitlines(hSIh), ' = ', 'split');

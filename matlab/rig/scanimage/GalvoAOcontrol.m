@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/GalvoAOcontrol.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 
 %This allows you to give analog signals to X and Y galvos (instead of using
 %NImax). WARNING: Never use voltages outside the -5 to 5 V range (safety

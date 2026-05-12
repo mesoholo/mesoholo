@@ -1,6 +1,20 @@
-%% Create Array of Targets
-clearvars -EXCEPT hSI hSICtl
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/analysis/makeMasks3D_holeburn_HS.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
 
+% the previous version (makeMasks3D_holeburn_HS) returns different
+% holoRequest.targets for every MROI setting
+% we want holoRequest.targets to stay the same (converted to the
+% calibration setting) regardless of the MROI setting
+
+%%%%%%% only changed 3 lines
+% xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1)-1);
+% xyorig(:,2) = round(xynorm(:,2)*fullnpix_orig(2));
+% holoRequest.targets=[fliplr(xyorig) centerZc];
+
+%% Create Array of Targets
 sipix = 512;
 radius = 5;
 
@@ -35,8 +49,8 @@ z=zeros([size(xy,1) 1]);
 for i=1:11
     z(find(xy(:,1)==30*i+20+56))=0*15*(6-i);%*0 for flat eagle pattern
 end
-xy(:,1) = xy(:,1)+00; %[-100:100] Offset the eagle by these many pixels (- moves it left, + moves it right)
-xy(:,2) = xy(:,2)+100; %[-100:100] Offset the eagle by these many pixels (- moves it up, + moves it down)
+xy(:,1) = xy(:,1)-00; %[-100:100] Offset the eagle by these many pixels (- moves it up, + moves it down)
+xy(:,2) = xy(:,2)-00; %[-100:100] Offset the eagle by these many pixels (- moves it up, + moves it down)
 % (-80x, 0y) avoids zero order in the center fork and also roughly
 % balances DEs in both wings
 
@@ -45,31 +59,30 @@ xyum = xynorm;
 xynew = xynorm;
 %%%%%%%%%%%%%% Holemasks generated in normalized coordinates
 
-%%%%%%%%%%%%%% Convert holemasks to calibrated holo fov pixel coordinates
-nstrips_orig = 2;
-nxpix_orig = 500*ones(nstrips_orig,1);
-nypix_orig = 1000*ones(nstrips_orig,1);
+nstrips_orig = 3;
+nxpiSx_orig = 400*ones(nstrips_orig,1);
+nypix_orig = 600*ones(nstrips_orig,1);
 fullnpix_orig = [sum(nxpix_orig),mean(nypix_orig)];
 
-xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1));
+xyorig(:,1) = round(xynorm(:,1)*fullnpix_orig(1)-1);
 xyorig(:,2) = round(xynorm(:,2)*fullnpix_orig(2));
+
 %%%%%%%%%%%%%% Holemasks converted to pixel coordinates with respect to
 %%%%%%%%%%%%%% calibrated holo fov
 
 %%%%%%%%%%%% Convert holemasks to absolute um coords
 [fullxpix_orig,fullypix_orig] = meshgrid(linspace(1,fullnpix_orig(1),fullnpix_orig(1)),...
     linspace(1,fullnpix_orig(2),fullnpix_orig(2)));
-fullxsize_orig = 500*nstrips_orig; %um
-fullysize_orig = 1000; %um
-fullxcenter_orig = 0; %um
-fullycenter_orig = -200; %um
+fullxsize_orig = 400*nstrips_orig; %um
+fullysize_orig = 1200; %um
+fullxcenter_orig = 450; %um
+fullycenter_orig = -450; %um
 [fullxum_orig,fullyum_orig] = meshgrid(...
     linspace(fullxcenter_orig-fullxsize_orig/2,fullxcenter_orig+fullxsize_orig/2,fullnpix_orig(1)),...
     linspace(fullycenter_orig-fullysize_orig/2,fullycenter_orig+fullysize_orig/2,fullnpix_orig(2))...
     );
 fullxum_orig = round(fullxum_orig);
 fullyum_orig = round(fullyum_orig);
-xyum = zeros(size(xyorig));
 for i=1:size(xyorig,1)
     currind = fullxpix_orig==xyorig(i,1) & fullypix_orig==xyorig(i,2);
     xyum(i,:) = [fullxum_orig(currind),fullyum_orig(currind)];
@@ -109,7 +122,6 @@ fullycenter = mean(ycenter); %um
 fullxum = round(fullxum);
 fullyum = round(fullyum);
 
-xynew = zeros(size(xyorig));
 for i=1:size(xyum,1)
     currind = find(abs(fullxum-xyum(i,1))<=1 & abs(fullyum-xyum(i,2))<=1);
     [currindx,currindy] = ind2sub(size(fullxum),currind(1));
@@ -132,9 +144,7 @@ for n=1:nstrips
         sources{n}(:,:,i)=imdilate(sources{n}(:,:,i),SE);
     end
 end
-%%%%%%%%%%%%%% Sources created from holemasks
 
-%%%%%%%%%%%%%% Display/plot holemasks wrt current fov scanfields
 temp = [];
 for n=1:nstrips
     if(~isempty(sources{n}))
@@ -162,7 +172,7 @@ figure(999);imagesc(temp)
    correctZ = 1; %Hacky correct Z cerrors added 9/30/19 by Ian
    if correctZ
        zMap=[ [-90 -60 -30 0 30 60 90];... %aka Zs % only planes 5,6,7 have sense, the rest is there so the vector would fit
-           [-90 -60 -30 0 30 60 90]-25 ]; % [-96 -64 -32 0 32 64 96] optotune units
+           [-90 -60 -30 0 30 60 90] ]; % [-96 -64 -32 0 32 64 96] optotune units
        % --correction if right wing is brighter and ++ if left is brighter
 %        temp1 = [-fliplr(zMap(1,2:end)),zMap(1,:)];
 %        temp2 = [-fliplr(zMap(2,2:end)-zMap(2,1)),(zMap(2,:)-zMap(2,1))];
@@ -173,11 +183,10 @@ figure(999);imagesc(temp)
        zMap=0;
    end
 
-   xoffset = 0; % actually y offset in terms of SI (++ for down, -- for up)
+   xoffset = -8; % actually y offset in terms of SI (++ for down, -- for up)
                   % If using xoffset, use real number, if not set to NaN to
                   % use xrotate
-   yoffset = 36; % (-- for left, ++ for right)
-% xoffset = 0; yoffset = 0;
+   yoffset = 188; % (-- for left, ++ for right)
    xrotate = 0*[0 0 0 0 0 0 0]; % fix for rotation along 1 axis (offsets with respect to z along x)
                                     % If using xrotate, set xoffset to NaN
    yrotate = 0*[-1.5 -0.5 -1 0 1 0.5 1.5]; % same wrt y
@@ -255,9 +264,9 @@ end
 
 % pixelToRefTransform = evalin('base','hSI.hRoiManager.currentRoiGroup.rois(1).scanfields(1).pixelToRefTransform');
 % centerXY = scanimage.mroi.util.xformPoints(centerXY,inv(pixelToRefTransform));
-centerXY = fliplr(xyorig);
-holoRequest.targets=[centerXY centerZc];
-holoRequest.actualtargets = [centerXY centerZ];
+centerXY = fliplr(xynew);
+holoRequest.targets=[fliplr(xyorig) centerZc];
+holoRequest.actualtargets = [fliplr(xynew) centerZ];
 
 holoRequest.xoffset=MODxoffset;
 holoRequest.yoffset=MODyoffset;

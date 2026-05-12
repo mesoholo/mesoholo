@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/scanimage/getFOVtocalibrate.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [ col,row,numNonNanElements ] = getFOVtocalibrate( array, display,exp )
 %getFOVtocalibrate Calculates the number and coordinates of FOVs to
 %calibrate based on grid offset arrays. Hardcoded: Index to voltage

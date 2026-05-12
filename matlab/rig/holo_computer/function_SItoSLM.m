@@ -1,3 +1,9 @@
+%MESOHOLO-DOC
+% mesoholo — mesoscale holography code (Abdeladim et al., 2026).
+% Relative path in repository: matlab/rig/holo_computer/function_SItoSLM.m
+% See README.md at repo root and docs/DEPENDENCIES.md for setup and hardware notes.
+%
+
 function [SLMXYZP] = function_SItoSLM(SIXYZ,CoC)
 %Function takes coordinates in SI space XY and optotuneZ (n x 3 matrix)
 %and CoC as created in alignSLMtoCam
